@@ -26,8 +26,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProvider>
           <WalletMultiButtonDynamic>
-            <Toaster position="bottom-center" richColors />
             {children}
+            <Toaster position="bottom-center" richColors />
           </WalletMultiButtonDynamic>
         </SessionProvider>
       </body>
