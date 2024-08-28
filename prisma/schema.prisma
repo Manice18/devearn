@@ -17,7 +17,7 @@ datasource db {
 
 model User {
   id                String             @id @default(cuid())
-  name              String?
+  name              String             @unique
   email             String             @unique
   emailVerified     DateTime?
   image             String?
@@ -85,7 +85,6 @@ model Bounty {
   difficulty   Difficulty
   rewardAmount Int
   rewardToken  String
-  rewardValue  String?
   isLive       Boolean            @default(false)
   completed    Boolean            @default(false)
   userId       String

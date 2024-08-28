@@ -41,6 +41,7 @@ interface Repo {
 }
 interface Issue {
   id: number;
+  number: number;
   title: string;
 }
 
@@ -51,6 +52,7 @@ const CreateBountyForm = () => {
 
   const [repos, setRepos] = useState<Repo[]>([]);
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -85,7 +87,12 @@ const CreateBountyForm = () => {
           },
         },
       );
-      setIssues(response.data);
+      const formattedIssues = response.data.map((issue) => ({
+        id: issue.id,
+        number: issue.number,
+        title: issue.title,
+      }));
+      setIssues(formattedIssues);
     } catch (error) {
       console.error("Error fetching issues:", error);
       toast.error("Failed to fetch issues");
@@ -95,7 +102,16 @@ const CreateBountyForm = () => {
   const handleRepoChange = (repoFullName: string) => {
     form.setValue("githubRepo", repoFullName);
     form.setValue("githubIssue", ""); // Reset the issue when repo changes
+    setSelectedIssue(null);
     fetchIssues(repoFullName);
+  };
+
+  const handleIssueChange = (issueNumber: string) => {
+    const issue = issues.find((i) => i.number.toString() === issueNumber);
+    if (issue) {
+      setSelectedIssue(issue);
+      form.setValue("githubIssue", `#${issue.number} ${issue.title}`);
+    }
   };
 
   const form = useForm<CreateBountyFormType>({
@@ -256,7 +272,10 @@ const CreateBountyForm = () => {
               <FormItem className="w-full">
                 <FormLabel>Github Issue</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    handleIssueChange(value);
+                    field.onChange(value);
+                  }}
                   value={field.value}
                   disabled={!form.watch("githubRepo")}
                 >
@@ -267,8 +286,11 @@ const CreateBountyForm = () => {
                   </FormControl>
                   <SelectContent>
                     {issues.map((issue) => (
-                      <SelectItem key={issue.id} value={issue.title}>
-                        {issue.title}
+                      <SelectItem
+                        key={issue.id}
+                        value={issue.number.toString()}
+                      >
+                        #{issue.number} {issue.title}
                       </SelectItem>
                     ))}
                   </SelectContent>

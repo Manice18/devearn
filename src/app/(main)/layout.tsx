@@ -15,7 +15,7 @@ const LoggedInLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       <Header />
       <WorkingSidebar>
-        <main className="mx-auto max-w-c-1390 px-4 pb-20 pt-35 md:px-8 md:pt-40 xl:pb-25 xl:pt-46 2xl:px-0">
+        <main className="mx-auto max-w-c-1390 px-4 pb-20 pt-20 md:px-8 md:pt-35 xl:pb-25 2xl:px-0">
           {children}
         </main>
       </WorkingSidebar>
