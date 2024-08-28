@@ -16,14 +16,15 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  bounties      Bounty[]
+  id                String             @id @default(cuid())
+  name              String?
+  email             String             @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  bounties          Bounty[]
+  bountySubmissions BountySubmission[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -75,7 +76,7 @@ model VerificationToken {
 }
 
 model Bounty {
-  id           String     @id @default(cuid())
+  id           String             @id @default(cuid())
   title        String
   oneLiner     String
   description  String
@@ -83,14 +84,29 @@ model Bounty {
   difficulty   Difficulty
   rewardAmount Int
   rewardToken  String
-  isLive       Boolean    @default(false)
-  completed    Boolean    @default(false)
+  isLive       Boolean            @default(false)
+  completed    Boolean            @default(false)
   userId       String
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  submissions  BountySubmission[]
 
   createdAt DateTime @default(now())
 
   @@map("bounties")
+}
+
+model BountySubmission {
+  id                String  @id @default(cuid())
+  bountyId          String
+  userId            String
+  submissionDetails String
+  isAccepted        Boolean @default(false)
+  bounty            Bounty  @relation(fields: [bountyId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("bounty_submissions")
 }
 
 enum Difficulty {

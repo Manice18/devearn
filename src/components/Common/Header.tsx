@@ -53,7 +53,7 @@ const Header = () => {
     <nav
       className={cn(
         "fixed top-0 z-[99999] flex w-full items-center border-b border-gray-200 bg-gray-100 px-22 py-3 md:px-4",
-        stickyMenu && "border-b-2 shadow-sm dark:bg-black",
+        stickyMenu && "border-b-2 bg-white shadow-sm dark:bg-black",
       )}
       ref={menuRef}
     >

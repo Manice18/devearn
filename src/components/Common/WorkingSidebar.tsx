@@ -12,6 +12,7 @@ import {
   LogOut,
   BadgeDollarSign,
   ClipboardList,
+  FileBadge,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -50,12 +51,24 @@ export function WorkingSidebar({ children }: { children?: React.ReactNode }) {
         <ClipboardList className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
+    {
+      label: "Reward Contributors",
+      href: "/reward-contributors",
+      icon: (
+        <FileBadge className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
   ];
   const [open, setOpen] = useState(false);
   return (
-    <div className={cn("mx-auto overflow-scroll px-20", "h-screen")}>
+    <div
+      className={cn(
+        "mx-auto overflow-x-hidden overflow-y-scroll px-4 md:px-20",
+        "h-screen",
+      )}
+    >
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
+        <SidebarBody className="z-[99999] justify-between gap-10">
           <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">

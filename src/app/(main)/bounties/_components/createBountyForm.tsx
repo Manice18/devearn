@@ -82,7 +82,7 @@ const CreateBountyForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex min-w-[500px] flex-col space-y-4 p-4"
+        className="flex flex-col space-y-4 p-4"
       >
         <FormField
           control={form.control}

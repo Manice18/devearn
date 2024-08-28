@@ -1,11 +1,15 @@
-import CreateBountyForm from "./_components/createBountyForm";
+import CreateBountyForm from "../_components/createBountyForm";
 
 const Page = () => {
   return (
-    <div className="h-full">
-      <h1 className="text-3xl font-semibold">Create Bounty</h1>
-      <CreateBountyForm />
-    </div>
+    <section>
+      <div className="mx-auto space-y-6">
+        <h1 className="text-3xl font-bold text-black dark:text-white">
+          Create Bounty
+        </h1>
+        <CreateBountyForm />
+      </div>
+    </section>
   );
 };
 

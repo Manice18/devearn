@@ -1,4 +1,5 @@
 import { constructMetaData } from "@/lib/metadata";
+import BountiesPage from "@/components/Bounties/BountiesPage";
 
 export const metadata = constructMetaData({
   title: "Bounties | DevEarn",
@@ -6,7 +7,7 @@ export const metadata = constructMetaData({
 });
 
 const Bounties = async () => {
-  return <div>hi hi lwkjelw jewl</div>;
+  return <BountiesPage />;
 };
 
 export default Bounties;

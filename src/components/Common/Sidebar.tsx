@@ -116,15 +116,48 @@ export const MobileSidebar = ({
     <>
       <div
         className={cn(
-          "z-[9999] ml-auto flex w-20 flex-row items-center justify-between bg-neutral-100 px-4 py-4 dark:bg-neutral-800 md:hidden",
+          "z-[9999] ml-auto flex w-20 flex-row items-center justify-between bg-neutral-100 px-4 py-5 dark:bg-neutral-800 md:hidden",
         )}
         {...props}
       >
-        <div className="z-20 flex w-full justify-end">
-          <Menu
-            className="text-neutral-800 dark:text-neutral-200"
+        <div className="z-[99999] flex w-full justify-end">
+          <button
+            aria-label="hamburger Toggler"
+            className="text-manatee block text-2xl dark:text-white md:hidden"
             onClick={() => setOpen(!open)}
-          />
+          >
+            <span className="relative block h-5.5 w-5.5 cursor-pointer">
+              <span className="absolute right-0 block h-full w-full">
+                <span
+                  className={`delay-[0] relative left-0 top-0 my-1 block h-0.5 rounded-md bg-black duration-200 ease-in-out dark:bg-white ${
+                    !open ? "!w-full delay-300" : "w-0"
+                  }`}
+                />
+                <span
+                  className={`relative left-0 top-0 my-1 block h-0.5 rounded-md bg-black delay-150 duration-200 ease-in-out dark:bg-white ${
+                    !open ? "delay-400 !w-full" : "w-0"
+                  }`}
+                />
+                <span
+                  className={`relative left-0 top-0 my-1 block h-0.5 rounded-md bg-black delay-200 duration-200 ease-in-out dark:bg-white ${
+                    !open ? "!w-full delay-500" : "w-0"
+                  }`}
+                />
+              </span>
+              <span className="du-block absolute right-0 h-full w-full rotate-45">
+                <span
+                  className={`absolute left-2.5 top-0 block h-full w-0.5 rounded-md bg-black delay-300 duration-200 ease-in-out dark:bg-white ${
+                    !open ? "delay-[0] !h-0" : "h-full"
+                  }`}
+                />
+                <span
+                  className={`delay-400 absolute left-0 top-2.5 block h-0.5 w-full rounded-md bg-black duration-200 ease-in-out dark:bg-white ${
+                    !open ? "!h-0 delay-200" : "h-0.5"
+                  }`}
+                />
+              </span>
+            </span>
+          </button>
         </div>
         <AnimatePresence>
           {open && (
@@ -142,7 +175,7 @@ export const MobileSidebar = ({
               )}
             >
               <div
-                className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
+                className="absolute right-10 top-10 z-50 text-neutral-800 hover:cursor-pointer dark:text-neutral-200"
                 onClick={() => setOpen(!open)}
               >
                 <X />
