@@ -166,7 +166,13 @@ const BountiesPage = () => {
             <p className="flex gap-2.5">
               Click below to create one. <CornerRightDown />
             </p>
-            <Button>Create Bounty</Button>
+            <Button
+              onClick={() => {
+                router.push("/bounties/create-bounty");
+              }}
+            >
+              Create Bounty
+            </Button>
           </div>
         )}
       </div>

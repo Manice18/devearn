@@ -30,10 +30,73 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createBountyAction } from "@/actions";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+
+interface Repo {
+  id: number;
+  name: string;
+  full_name: string;
+}
+interface Issue {
+  id: number;
+  title: string;
+}
 
 const CreateBountyForm = () => {
   const { publicKey, connected } = useWallet();
   const router = useRouter();
+  const session = useSession();
+
+  const [repos, setRepos] = useState<Repo[]>([]);
+  const [issues, setIssues] = useState<Issue[]>([]);
+
+  useEffect(() => {
+    const fetchRepos = async () => {
+      try {
+        const response = await axios.get<Repo[]>(
+          "https://api.github.com/user/repos",
+          {
+            headers: {
+              Authorization: `Bearer ${session.data?.token}`,
+            },
+          },
+        );
+        setRepos(response.data);
+      } catch (error) {
+        console.error("Error fetching repos:", error);
+        toast.error("Failed to fetch repositories");
+      }
+    };
+
+    if (session.data?.token) {
+      fetchRepos();
+    }
+  }, [session.data?.token]);
+
+  const fetchIssues = async (repoFullName: string) => {
+    try {
+      const response = await axios.get<Issue[]>(
+        `https://api.github.com/repos/${repoFullName}/issues`,
+        {
+          headers: {
+            Authorization: `Bearer ${session.data?.token}`,
+          },
+        },
+      );
+      setIssues(response.data);
+    } catch (error) {
+      console.error("Error fetching issues:", error);
+      toast.error("Failed to fetch issues");
+    }
+  };
+
+  const handleRepoChange = (repoFullName: string) => {
+    form.setValue("githubRepo", repoFullName);
+    form.setValue("githubIssue", ""); // Reset the issue when repo changes
+    fetchIssues(repoFullName);
+  };
 
   const form = useForm<CreateBountyFormType>({
     resolver: zodResolver(createBountySchema),
@@ -42,7 +105,7 @@ const CreateBountyForm = () => {
       oneLiner: "",
       description: "",
       githubRepo: "",
-      // tags: [],
+      githubIssue: "",
       difficulty: "EASY",
       rewardAmount: 1,
       rewardToken: "",
@@ -142,39 +205,83 @@ const CreateBountyForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="githubRepo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Github Repo</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select from one of your repositories" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {/* TODO:Add github linking here*/}
-                  <SelectItem value="https://github.com">
-                    <div className="flex items-center space-x-2">
-                      https://github.com
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="https://github2.com">
-                    <div className="flex items-center space-x-2">
-                      https://github2.com
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                Select the issue from your Github repository
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex space-x-4">
+          <FormField
+            control={form.control}
+            name="githubRepo"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Github Repo</FormLabel>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    handleRepoChange(value);
+                  }}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select from one of your repositories" />
+                    </SelectTrigger>
+                  </FormControl>
+
+                  <SelectContent>
+                    {repos.length > 0 ? (
+                      repos.map((repo, index) => (
+                        <SelectItem value={repo.full_name} key={index}>
+                          {repo.name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="No Repositories">
+                        <div className="flex items-center space-x-2">
+                          No Repositories
+                        </div>
+                      </SelectItem>
+                    )}
+                    {/* TODO:Add github linking here*/}
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Select the issue from your Github repository
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="githubIssue"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Github Issue</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  disabled={!form.watch("githubRepo")}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select the issue from your Repository" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {issues.map((issue) => (
+                      <SelectItem key={issue.id} value={issue.title}>
+                        {issue.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Select the issue from your Github repository
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="difficulty"
@@ -209,7 +316,7 @@ const CreateBountyForm = () => {
             control={form.control}
             name="rewardAmount"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel className="dark:text-white">Reward Amount</FormLabel>
                 <FormControl>
                   <Input
@@ -227,7 +334,7 @@ const CreateBountyForm = () => {
             control={form.control}
             name="rewardToken"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Native Payment Token</FormLabel>
                 <Select
                   onValueChange={field.onChange}

@@ -20,6 +20,7 @@ export async function createBountyAction(values: CreateBountyFormType) {
       description: data.description,
       oneLiner: data.oneLiner,
       githubRepo: data.githubRepo,
+      githubIssue: data.githubIssue,
       difficulty: data.difficulty,
       rewardAmount: data.rewardAmount,
       rewardToken: data.rewardToken,

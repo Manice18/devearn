@@ -16,6 +16,7 @@ const createBountySchema = z.object({
   oneLiner: z.string().trim().min(1, "Cannot be empty"),
   description: z.string().trim().min(1, "Cannot be empty"),
   githubRepo: z.string().trim().min(1, "Cannot be empty"),
+  githubIssue: z.string().trim().min(1, "Cannot be empty"),
   // tags: z.array(z.string()).min(1, "Cannot be empty"),
   difficulty: z.enum(["EASY", "MEDIUM", "HARD"]),
   rewardAmount: z.coerce.number().gte(1, "Value must be greater than 0"),
