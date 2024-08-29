@@ -1,10 +1,12 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
+import Link, { LinkProps } from "next/link";
+
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 interface Links {
   label: string;

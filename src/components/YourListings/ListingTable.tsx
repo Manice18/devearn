@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import {
   ColumnDef,
@@ -14,14 +16,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { format, set } from "date-fns";
-import {
-  ArrowUpDown,
-  Github,
-  ListFilter,
-  SquareArrowOutUpRight,
-  Trash2,
-} from "lucide-react";
+import { format } from "date-fns";
+import { ArrowUpDown, ListFilter, SquareArrowOutUpRight } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -41,13 +38,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-
-import { toast } from "sonner";
-import { useSession } from "next-auth/react";
 import { yourListingAction } from "@/actions";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type BountyData = {
   id: string;

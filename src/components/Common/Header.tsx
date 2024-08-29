@@ -8,7 +8,6 @@ import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import UserButton from "@/components/Common/UserButton";
-import Logo from "@/components/Logo/logo";
 import { Spinner } from "@/components/Common/Spinner";
 import { cn } from "@/lib/utils";
 import WalletConnectButton from "../Wallet/wallet-connect-button";

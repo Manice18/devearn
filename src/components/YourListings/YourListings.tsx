@@ -1,12 +1,13 @@
 "use client";
 
-import { yourListingAction } from "@/actions";
-import prisma from "@/lib/prisma";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+
+import { useSession } from "next-auth/react";
 import { CornerRightDown } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { yourListingAction } from "@/actions";
 import ListingTable from "./ListingTable";
 
 const YourListings = () => {

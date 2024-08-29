@@ -5,9 +5,8 @@ import Link from "next/link";
 
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
-import { Lock, LogOut, Settings } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 
-// import avatarPlaceholder from "@/assets/images/avatar_placeholder.png";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -47,14 +46,6 @@ export default function UserButton({ user }: UserButtonProps) {
               <span>Settings</span>
             </Link>
           </DropdownMenuItem>
-          {user.role === "ADMIN" && (
-            <DropdownMenuItem asChild className="dark:hover:bg-hoverdark">
-              <Link href="/admin">
-                <Lock className="mr-2 h-4 w-4" />
-                Admin
-              </Link>
-            </DropdownMenuItem>
-          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator className="dark:bg-white" />
         <DropdownMenuItem asChild className="dark:hover:bg-hoverdark">

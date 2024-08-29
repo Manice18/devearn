@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { MoveRight } from "lucide-react";
@@ -30,9 +33,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createBountyAction } from "@/actions";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useSession } from "next-auth/react";
 
 interface Repo {
   id: number;
