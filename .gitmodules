@@ -1,0 +1,3 @@
+[submodule "anchor_escrow"]
+	path = anchor_escrow
+	url = git@github.com:Manice18/anchor_escrow.git
