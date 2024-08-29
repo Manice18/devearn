@@ -11,11 +11,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import BountyCard from "./BountyCard";
 
 const BountiesPage = () => {
   const router = useRouter();
 
-  const [bounties, setBounties] = useState<any>([]);
+  const [bounties, setBounties] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   /* This useEffect is for testing*/
@@ -53,6 +54,7 @@ const BountiesPage = () => {
     };
     fetchBounties();
   }, []);
+
   return (
     <section>
       <div className="mx-auto space-y-6">
@@ -68,9 +70,7 @@ const BountiesPage = () => {
             >
               Create Bounty
             </Button>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
         {isLoading ? (
           <div>Loading...</div>
@@ -81,81 +81,47 @@ const BountiesPage = () => {
               <TabsTrigger value="live">Live</TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>
             </TabsList>
+
             <TabsContent
               value="all"
               className="flex w-full flex-col items-center space-y-2"
             >
-              {bounties.map((bounty: any) => (
-                <div
-                  key={bounty.id}
-                  onClick={() => router.push(`/bounties/${bounty.id}`)}
-                  className="flex w-full items-center justify-between rounded-lg border-2 border-muted bg-white p-2 dark:bg-black md:p-4"
-                >
-                  <div className="flex items-center space-x-2 md:space-x-6">
-                    <div className="flex space-x-3">
-                      <Image
-                        src="/assets/icons/avatar_placeholder.png"
-                        alt="bounty image"
-                        height={20}
-                        width={100}
-                        className="size-20 rounded-lg"
-                      />
-                      <Separator
-                        orientation="vertical"
-                        className="h-[100] w-0.5"
-                      />
-                    </div>
-
-                    <div className="space-y-2 capitalize">
-                      <h3 className="text-xl font-medium">{bounty.title}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {bounty.oneLiner}
-                      </p>
-                    </div>
-                    <div className="space-y-2 text-muted-foreground dark:text-white">
-                      <p className="flex items-center space-x-1 text-sm">
-                        <Gauge className="size-5" />
-                        <span className="capitalize">
-                          {bounty.difficulty.toLowerCase()}
-                        </span>
-                      </p>
-                      <p className="flex items-center space-x-2.5 pl-1.5 text-sm">
-                        <div
-                          className={cn(
-                            "size-2 rounded-full",
-                            bounty.isLive ? "bg-green-400" : "bg-red-400",
-                          )}
-                        />
-                        <span className="">
-                          {bounty.isLive ? "Live" : "Completed"}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2 text-lg font-semibold text-black dark:text-white">
-                    <span>{bounty.rewardAmount}</span>
-                    <Avatar className="size-7">
-                      <AvatarImage
-                        src={
-                          bounty.rewardToken === "USDC"
-                            ? "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
-                            : "https://assets.coingecko.com/coins/images/4128/standard/solana.png?1718769756"
-                        }
-                      />
-                      <AvatarFallback>
-                        {bounty.rewardToken === "USDC" ? "USDC" : "SOL"}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                </div>
-              ))}
+              {bounties
+                .sort((a, b) => {
+                  if (a.isLive === b.isLive) {
+                    return a.completed === b.completed
+                      ? 0
+                      : a.completed
+                        ? 1
+                        : -1;
+                  }
+                  return a.isLive ? -1 : 1;
+                })
+                .map((bounty) => (
+                  <BountyCard key={bounty.id} {...bounty} />
+                ))}
             </TabsContent>
-            <TabsContent value="live">
-              Live bounties will be shown here.
+
+            <TabsContent
+              value="live"
+              className="flex w-full flex-col items-center space-y-2"
+            >
+              {bounties
+                .filter((bounty) => bounty.isLive && !bounty.completed)
+                .map((bounty) => (
+                  <BountyCard key={bounty.id} {...bounty} />
+                ))}
             </TabsContent>
-            <TabsContent value="completed">
-              Completed bounties will be shown here.
+
+            <TabsContent
+              value="completed"
+              className="flex w-full flex-col items-center space-y-2"
+            >
+              {bounties
+                .filter((bounty) => !bounty.isLive && bounty.completed)
+                .map((bounty) => (
+                  <BountyCard key={bounty.id} {...bounty} />
+                ))}
             </TabsContent>
           </Tabs>
         ) : (

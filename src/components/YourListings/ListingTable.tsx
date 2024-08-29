@@ -68,7 +68,7 @@ export default function ListingTable() {
   useEffect(() => {
     const fetchUserQRs = async () => {
       const response = await yourListingAction(session?.data?.user.id);
-      console.log(response);
+
       setData(response);
     };
     fetchUserQRs();
@@ -134,7 +134,6 @@ export default function ListingTable() {
         accessorKey: "isLive",
         header: "Is Live",
         cell: ({ row }) => {
-          console.log(row.getValue("isLive"));
           return <div>{row.getValue("isLive") ? "Yes" : "No"}</div>;
         },
       },
@@ -143,7 +142,7 @@ export default function ListingTable() {
         id: "edit",
         cell: (tableProps) => (
           <Button
-            className="size-8 gap-2.5 rounded-md p-0 transition duration-500 hover:bg-accent dark:bg-accent dark:hover:bg-accent"
+            className="size-8 gap-2.5 rounded-md p-0 transition duration-500 hover:bg-gray-200 dark:bg-accent dark:hover:bg-accent"
             onClick={() => {
               router.push(`/bounties/${tableProps.row.original.id}`);
             }}
@@ -199,7 +198,6 @@ export default function ListingTable() {
         id: "github",
         header: "Github",
         cell: ({ row }) => {
-          console.log(row.original.githubRepo);
           return (
             <Link
               className=""

@@ -63,7 +63,7 @@ export function WorkingSidebar({ children }: { children?: React.ReactNode }) {
   return (
     <div
       className={cn(
-        "mx-auto overflow-x-hidden overflow-y-scroll px-4 md:px-20",
+        "mx-auto overflow-x-hidden overflow-y-scroll px-4 md:pl-20 md:pr-0 2xl:pr-20",
         "h-screen",
       )}
     >

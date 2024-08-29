@@ -24,6 +24,11 @@ interface SettingsPageProps {
   user: User;
 }
 
+const reloadSession = () => {
+  const event = new Event("visibilitychange");
+  document.dispatchEvent(event);
+};
+
 export default function SettingsPage({ user }: SettingsPageProps) {
   const session = useSession();
 
@@ -37,50 +42,49 @@ export default function SettingsPage({ user }: SettingsPageProps) {
       await updateProfile(data);
       // toast({ description: "Profile updated." });
       toast.success("Profile updated successfully.");
+      reloadSession();
       session.update();
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast.error("Username already exists, please try another one.");
     }
   }
 
   return (
-    <section className="overflow-hidden">
-      <div className="mx-auto max-w-7xl space-y-6">
-        <h1 className="text-3xl font-bold text-black dark:text-white">
-          Settings
-        </h1>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="max-w-sm space-y-2.5 px-2"
-          >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-black dark:text-white">
-                    Name
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter a username"
-                      {...field}
-                      autoComplete="off"
-                      className="dark:hover:bg-hoverdark transition-all duration-500 dark:bg-black"
-                    />
-                  </FormControl>
-                  <FormDescription>Your public username</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              Submit
-            </Button>
-          </form>
-        </Form>
-      </div>
-    </section>
+    <div className="mx-auto max-w-7xl space-y-6">
+      <h1 className="text-3xl font-bold text-black dark:text-white">
+        Settings
+      </h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="max-w-sm space-y-2.5 px-2"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-black dark:text-white">
+                  Name
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter a username"
+                    {...field}
+                    autoComplete="off"
+                    className="dark:hover:bg-hoverdark transition-all duration-500 dark:bg-black"
+                  />
+                </FormControl>
+                <FormDescription>Your public username</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 }

@@ -9,7 +9,7 @@ import { providerMap } from "@/lib/auth";
 
 const Signup = () => {
   return (
-    <main className="pb-12.5 pt-32.5 lg:pb-25 lg:pt-45 xl:pb-30 xl:pt-50">
+    <main className="pb-12.5 pt-20 lg:pb-25 xl:pb-30">
       <section className="relative z-1 mx-auto max-w-c-1016 px-7.5 pb-7.5 pt-10 lg:px-15 lg:pt-15 xl:px-20 xl:pt-20">
         <motion.div
           variants={{

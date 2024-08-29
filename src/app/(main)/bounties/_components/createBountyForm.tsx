@@ -33,6 +33,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createBountyAction } from "@/actions";
+import { useEscrow } from "@/hooks/useEscrow";
 
 interface Repo {
   id: number;
@@ -49,6 +50,8 @@ const CreateBountyForm = () => {
   const { publicKey, connected } = useWallet();
   const router = useRouter();
   const session = useSession();
+
+  const { makeEscrow } = useEscrow();
 
   const [repos, setRepos] = useState<Repo[]>([]);
   const [issues, setIssues] = useState<Issue[]>([]);
@@ -136,8 +139,13 @@ const CreateBountyForm = () => {
     }
     try {
       let promise: any;
-      promise = new Promise<void>((resolve, reject) => {
-        createBountyAction(values)
+      promise = new Promise<void>(async (resolve, reject) => {
+        const USDC_ADDRESS = "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
+        await makeEscrow({
+          mintA: USDC_ADDRESS,
+          deposit: values.rewardAmount,
+        });
+        await createBountyAction(values)
           .then(() => {
             resolve();
             router.push("/your-listings");
@@ -377,13 +385,13 @@ const CreateBountyForm = () => {
                         <span>USDC</span>
                       </div>
                     </SelectItem>
-                    <SelectItem value="SOL">
+                    <SelectItem value="SOL" disabled>
                       <div className="flex items-center space-x-2">
                         <Avatar className="size-7">
                           <AvatarImage src="https://assets.coingecko.com/coins/images/4128/standard/solana.png?1718769756" />
                           <AvatarFallback>SOL</AvatarFallback>
                         </Avatar>
-                        <span>SOL</span>
+                        <span>SOL (coming soon)</span>
                       </div>
                     </SelectItem>
                   </SelectContent>

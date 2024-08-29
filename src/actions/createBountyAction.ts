@@ -22,6 +22,7 @@ export async function createBountyAction(values: CreateBountyFormType) {
       difficulty: data.difficulty,
       rewardAmount: data.rewardAmount,
       rewardToken: data.rewardToken,
+      createdBy: session?.user.name,
       isLive: data.isLive === "true",
       completed: false,
       userId: userId,

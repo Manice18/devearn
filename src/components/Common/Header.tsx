@@ -9,8 +9,8 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import UserButton from "@/components/Common/UserButton";
 import { Spinner } from "@/components/Common/Spinner";
+import WalletConnectButton from "@/components/Wallet/wallet-connect-button";
 import { cn } from "@/lib/utils";
-import WalletConnectButton from "../Wallet/wallet-connect-button";
 
 const Header = () => {
   const session = useSession();
@@ -56,7 +56,7 @@ const Header = () => {
       )}
       ref={menuRef}
     >
-      <div className="mx-auto flex w-full max-w-[1600px] items-center">
+      <div className="mx-auto flex w-full max-w-c-1390 items-center">
         <div className="flex w-full items-center justify-end gap-x-2 md:ml-auto">
           {!user && (
             <>
@@ -82,23 +82,6 @@ const Header = () => {
           {user && session.status !== "loading" && (
             <>
               <WalletConnectButton />
-              {/* <Button
-                variant="ghost"
-                size="sm"
-                asChild
-                className="dark:hover:bg-hoverdark"
-              >
-                <Link
-                  href="/bounties"
-                  className={cn(
-                    "text-manatee text-lg",
-                    pathUrl === "/bounties" &&
-                      "font-semibold text-black dark:text-white",
-                  )}
-                >
-                  bounties
-                </Link>
-              </Button> */}
               <UserButton user={user} />
             </>
           )}

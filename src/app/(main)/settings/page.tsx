@@ -18,8 +18,8 @@ export default async function Settings() {
   }
 
   return (
-    <main className="min mx-auto max-w-c-1390 px-4 pb-20 pt-35 sm:min-w-[400px] md:px-8 md:pt-40 xl:pb-25 xl:pt-46 2xl:px-0">
+    <section className="overflow-hidden">
       <SettingsPage user={user} />
-    </main>
+    </section>
   );
 }
