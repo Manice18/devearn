@@ -3,6 +3,9 @@ import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { CircleCheck, Grab } from "lucide-react";
+import { PublicKey } from "@solana/web3.js";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -12,8 +15,6 @@ import {
   getBountySubmissions,
 } from "@/actions";
 import { useEscrow } from "@/hooks/useEscrow";
-import { CircleCheck, Grab } from "lucide-react";
-import { PublicKey } from "@solana/web3.js";
 
 type User = {
   id: string;
@@ -49,9 +50,10 @@ const ListBountySubmission = ({
   escrowAddress?: string;
   bountyAmount?: number;
 }) => {
+  const { publicKey, connected } = useWallet();
   const session = useSession();
 
-  const { takerEscrow, refundEscrow } = useEscrow();
+  const { takerEscrow } = useEscrow();
 
   const [bountySubmissions, setBountySubmissions] = useState<
     BountySubmission[] | null
@@ -97,6 +99,10 @@ const ListBountySubmission = ({
     amount: number,
     submissionId: string,
   ) => {
+    if (!publicKey || !connected) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
     try {
       let promise: any;
       promise = new Promise<void>(async (resolve, reject) => {
