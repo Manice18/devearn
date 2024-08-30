@@ -47,3 +47,52 @@ export async function getBountySubmissions(bountyId: string) {
 
   return data;
 }
+
+export async function acceptBountySubmission(
+  submissionId: string,
+  bountyId: string,
+) {
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  if (!userId) throw new Error("Unauthorized");
+
+  await prisma.bounty.update({
+    where: {
+      id: bountyId,
+    },
+    data: {
+      completed: true,
+      isLive: false,
+    },
+  });
+
+  await prisma.bountySubmission.update({
+    where: {
+      id: submissionId,
+    },
+    data: {
+      isAccepted: true,
+    },
+  });
+
+  return;
+}
+
+export async function claimRewardAction(submissionId: string) {
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  if (!userId) throw new Error("Unauthorized");
+
+  await prisma.bountySubmission.update({
+    where: {
+      id: submissionId,
+    },
+    data: {
+      claimedReward: true,
+    },
+  });
+
+  return;
+}

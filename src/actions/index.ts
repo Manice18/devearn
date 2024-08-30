@@ -4,6 +4,8 @@ import { yourListingAction } from "./yourListingsAction";
 import {
   bountySubmissionAction,
   getBountySubmissions,
+  acceptBountySubmission,
+  claimRewardAction,
 } from "./bountySubmissionAction";
 
 export {
@@ -12,4 +14,6 @@ export {
   yourListingAction,
   bountySubmissionAction,
   getBountySubmissions,
+  acceptBountySubmission,
+  claimRewardAction,
 };

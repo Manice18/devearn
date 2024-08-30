@@ -7,7 +7,6 @@ import { BN, Program } from "@coral-xyz/anchor";
 import {
   getAssociatedTokenAddressSync,
   getMint,
-  getOrCreateAssociatedTokenAccount,
   TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
@@ -70,14 +69,7 @@ export const useEscrow = () => {
         false,
         tokenProgram,
       );
-      // const makerAtaA = (
-      //   await getOrCreateAssociatedTokenAccount(
-      //     anchorProvider.connection,
-      //     anchorWallet.publicKey,
-      //     mintA,
-      //     maker.publicKey
-      //   )
-      // ).address;
+
       const [escrow] = PublicKey.findProgramAddressSync(
         [
           Buffer.from("escrow"),
@@ -99,7 +91,7 @@ export const useEscrow = () => {
         new BN(10).pow(new BN(mintAInfo.decimals)),
       );
 
-      return program.methods
+      await program.methods
         .make(seed, mintAAmount)
         .accountsPartial({
           maker: wallet.publicKey,
@@ -109,6 +101,8 @@ export const useEscrow = () => {
           escrow: escrow,
         })
         .rpc();
+
+      return escrow.toString();
     } catch (e) {
       toast.error("Error creating escrow");
       console.error(e);

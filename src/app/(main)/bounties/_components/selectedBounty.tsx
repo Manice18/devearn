@@ -12,20 +12,26 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const session = useSession();
 
+  const fetchBounty = async (id: string) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/getBounties?id=${id}`);
+      const data = await response.json();
+      setBounty(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching bounty", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchBounty = async (id: string) => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/getBounties?id=${id}`);
-        const data = await response.json();
-        setBounty(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching bounty", error);
-      }
-    };
     fetchBounty(bountyId);
   }, []);
+
+  const handleSubmissionSuccess = () => {
+    // Re-fetch the bounty to get the updated submissions
+    fetchBounty(bountyId);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -38,14 +44,13 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
           <div className="space-y-2">
             <h1 className="text-3xl font-bold capitalize text-black dark:text-white">
               {bounty.title}
-              {/* Bounty Title */}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Created by: <span>{/*bounty.createdBy*/}Username</span>
+              Created by: <span>{bounty.createdBy}</span>
             </p>
           </div>
           <div className="flex items-center space-x-1 text-lg font-bold text-black dark:text-white">
-            <span>{/*bounty.rewardAmount*/}100</span>
+            <span>{bounty.rewardAmount}</span>
             <Avatar className="size-7">
               {/*bounty.rewardToken*/}
               <AvatarImage
@@ -56,20 +61,18 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
                 }
               />
               <AvatarFallback>
-                {"USDC" === "USDC" ? "USDC" : "SOL"}
-                {/* {bounty.rewardToken === "USDC" ? "USDC" : "SOL"} */}
+                {/* {"USDC" === "USDC" ? "USDC" : "SOL"} */}
+                {bounty.rewardToken === "USDC" ? "USDC" : "SOL"}
               </AvatarFallback>
             </Avatar>
             <span className="font-semibold">
-              {"USDC" === "USDC" ? "USDC" : "SOL"}
+              {/* {"USDC" === "USDC" ? "USDC" : "SOL"} */}
+              {bounty.rewardToken === "USDC" ? "USDC" : "SOL"}
             </span>
           </div>
         </div>
         <div>
-          <p className="text-black dark:text-white">
-            {/* {bounty.description} */}
-            Bounty Description
-          </p>
+          <p className="text-black dark:text-white">{bounty.description}</p>
         </div>
         {session.data?.user?.id === bounty.userId ? (
           <div>
@@ -86,11 +89,16 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
               bountyId={bounty.id}
               bountyUserId={bounty.userId}
               setTrackUserSubmission={setTrackUserSubmission}
+              bountyAmount={bounty.rewardAmount}
+              escrowAddress={bounty.escrowAddress}
             />
             {trackUserSubmission && (
               <>
                 <h2 className="mt-4">Post Your Submission</h2>
-                <BountySubmissionForm bountyId={bounty.id} />
+                <BountySubmissionForm
+                  bountyId={bounty.id}
+                  onSubmissionSuccess={handleSubmissionSuccess}
+                />
               </>
             )}
           </div>

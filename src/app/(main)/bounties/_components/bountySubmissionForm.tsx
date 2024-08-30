@@ -21,7 +21,13 @@ import {
 import { toast } from "sonner";
 import { bountySubmissionAction } from "@/actions";
 
-const BountySubmissionForm = ({ bountyId }: { bountyId: string }) => {
+const BountySubmissionForm = ({
+  bountyId,
+  onSubmissionSuccess,
+}: {
+  bountyId: string;
+  onSubmissionSuccess: () => void;
+}) => {
   const form = useForm<BountySubmissionFormType>({
     resolver: zodResolver(bountySubmissionSchema),
     defaultValues: {
@@ -36,6 +42,7 @@ const BountySubmissionForm = ({ bountyId }: { bountyId: string }) => {
         bountyId: bountyId,
       });
       toast.success("Bounty submitted successfully");
+      onSubmissionSuccess();
     } catch (error) {
       toast.error("Error submitting bounty");
     }

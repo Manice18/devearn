@@ -141,11 +141,13 @@ const CreateBountyForm = () => {
       let promise: any;
       promise = new Promise<void>(async (resolve, reject) => {
         const USDC_ADDRESS = "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
-        await makeEscrow({
+
+        const escrowAddress = await makeEscrow({
           mintA: USDC_ADDRESS,
           deposit: values.rewardAmount,
         });
-        await createBountyAction(values, publicKey.toString())
+
+        await createBountyAction(values, publicKey.toString(), escrowAddress)
           .then(() => {
             resolve();
             router.push("/your-listings");

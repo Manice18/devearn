@@ -7,6 +7,7 @@ import { CreateBountyFormType, createBountySchema } from "@/lib/validation";
 export async function createBountyAction(
   values: CreateBountyFormType,
   pubkey: string,
+  escrowAddress: string | undefined,
 ) {
   const session = await auth();
   const userId = session?.user?.id;
@@ -26,6 +27,7 @@ export async function createBountyAction(
       rewardAmount: data.rewardAmount,
       rewardToken: data.rewardToken,
       pubKey: pubkey,
+      escrowAddress: escrowAddress,
       createdBy: session?.user.name,
       isLive: data.isLive === "true",
       completed: false,

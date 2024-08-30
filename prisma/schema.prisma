@@ -76,22 +76,23 @@ model VerificationToken {
 }
 
 model Bounty {
-  id           String             @id @default(cuid())
-  title        String
-  oneLiner     String
-  description  String
-  githubRepo   String
-  githubIssue  String
-  difficulty   Difficulty
-  rewardAmount Int
-  rewardToken  String
-  isLive       Boolean            @default(false)
-  completed    Boolean            @default(false)
-  createdBy    String?
-  pubKey       String?
-  userId       String
-  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  submissions  BountySubmission[]
+  id            String             @id @default(cuid())
+  title         String
+  oneLiner      String
+  description   String
+  githubRepo    String
+  githubIssue   String
+  difficulty    Difficulty
+  rewardAmount  Int
+  rewardToken   String
+  isLive        Boolean            @default(false)
+  completed     Boolean            @default(false)
+  createdBy     String?
+  pubKey        String?
+  escrowAddress String?
+  userId        String
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  submissions   BountySubmission[]
 
   createdAt DateTime @default(now())
 
@@ -99,13 +100,14 @@ model Bounty {
 }
 
 model BountySubmission {
-  id                String  @id @default(cuid())
+  id                String   @id @default(cuid())
   bountyId          String
   userId            String
   submissionDetails String
-  isAccepted        Boolean @default(false)
-  bounty            Bounty  @relation(fields: [bountyId], references: [id], onDelete: Cascade)
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  claimedReward     Boolean? @default(false)
+  isAccepted        Boolean  @default(false)
+  bounty            Bounty   @relation(fields: [bountyId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
