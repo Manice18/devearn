@@ -16,15 +16,16 @@ datasource db {
 }
 
 model User {
-  id                String             @id @default(cuid())
-  name              String             @unique
-  email             String             @unique
-  emailVerified     DateTime?
-  image             String?
-  accounts          Account[]
-  sessions          Session[]
-  bounties          Bounty[]
-  bountySubmissions BountySubmission[]
+  id                 String               @id @default(cuid())
+  name               String               @unique
+  email              String               @unique
+  emailVerified      DateTime?
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
+  bounties           Bounty[]
+  bountySubmissions  BountySubmission[]
+  rewardContributors RewardContributors[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -112,6 +113,22 @@ model BountySubmission {
   createdAt DateTime @default(now())
 
   @@map("bounty_submissions")
+}
+
+model RewardContributors {
+  id                   String @id @default(cuid())
+  airdropCampaignName  String
+  blinkLink            String
+  gitHubRepo           String
+  totalContributors    Int
+  tokenMintAddress     String
+  totalAllocatedAmount Int
+  totalClaimedAmount   Int?
+  noOfTimesClaimed     Int?
+  userId               String
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
 }
 
 enum Difficulty {
