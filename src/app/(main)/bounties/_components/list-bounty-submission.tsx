@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { format } from "date-fns";
 import { CircleCheck, Grab } from "lucide-react";
 import { PublicKey } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -195,6 +196,10 @@ const ListBountySubmission = ({
           </div>
           <p className="text-black dark:text-white">
             {submission.submissionDetails}
+          </p>
+          <p>
+            Submitted At:{" "}
+            <span>{format(new Date(submission.createdAt), "dd MMM yyyy")}</span>
           </p>
         </div>
       ))}

@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import BountySubmissionForm from "./bountySubmissionForm";
 import ListBountySubmission from "./list-bounty-submission";
+import { format } from "date-fns";
+import { Separator } from "@/components/ui/separator";
 
 const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
   const [bounty, setBounty] = useState<any>(null);
@@ -71,12 +73,17 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
             </span>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col">
           <p className="text-black dark:text-white">{bounty.description}</p>
+          <p className="ml-auto">
+            <span className="font-medium">Created At:</span>{" "}
+            <span>{format(new Date(bounty.createdAt), "dd MMM yyyy")}</span>
+          </p>
         </div>
+        <Separator className="w-full" />
         {session.data?.user?.id === bounty.userId ? (
           <div>
-            <h1>Submissions</h1>
+            <h1 className="text-3xl font-bold">Submissions</h1>
             <ListBountySubmission
               bountyId={bounty.id}
               bountyUserId={bounty.userId}
@@ -94,7 +101,7 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
             />
             {trackUserSubmission && (
               <>
-                <h2 className="mt-4">Post Your Submission</h2>
+                <h2 className="mt-4 text-xl font-bold">Post Your Submission</h2>
                 <BountySubmissionForm
                   bountyId={bounty.id}
                   onSubmissionSuccess={handleSubmissionSuccess}
