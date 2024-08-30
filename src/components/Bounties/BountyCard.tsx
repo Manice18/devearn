@@ -46,7 +46,11 @@ const BountyCard = ({
 
         <div className="space-y-2 capitalize">
           <h3 className="text-xl font-medium">{title}</h3>
-          <p className="text-sm text-muted-foreground">{oneLiner}</p>
+          <p className="w-[210px] text-sm text-muted-foreground">
+            {oneLiner.length > 30
+              ? oneLiner.substring(0, 26) + "..."
+              : oneLiner}
+          </p>
         </div>
         <div className="space-y-2 text-muted-foreground dark:text-white">
           <p className="flex items-center space-x-1 text-sm">

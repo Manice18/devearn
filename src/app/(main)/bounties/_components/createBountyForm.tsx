@@ -145,7 +145,7 @@ const CreateBountyForm = () => {
           mintA: USDC_ADDRESS,
           deposit: values.rewardAmount,
         });
-        await createBountyAction(values)
+        await createBountyAction(values, publicKey.toString())
           .then(() => {
             resolve();
             router.push("/your-listings");

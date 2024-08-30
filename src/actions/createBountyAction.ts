@@ -4,7 +4,10 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { CreateBountyFormType, createBountySchema } from "@/lib/validation";
 
-export async function createBountyAction(values: CreateBountyFormType) {
+export async function createBountyAction(
+  values: CreateBountyFormType,
+  pubkey: string,
+) {
   const session = await auth();
   const userId = session?.user?.id;
 
@@ -22,6 +25,7 @@ export async function createBountyAction(values: CreateBountyFormType) {
       difficulty: data.difficulty,
       rewardAmount: data.rewardAmount,
       rewardToken: data.rewardToken,
+      pubKey: pubkey,
       createdBy: session?.user.name,
       isLive: data.isLive === "true",
       completed: false,

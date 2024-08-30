@@ -99,14 +99,6 @@ export const useEscrow = () => {
         new BN(10).pow(new BN(mintAInfo.decimals)),
       );
 
-      console.log(
-        wallet.publicKey.toString(),
-        new PublicKey(mintA).toBase58(),
-        makerAtaA.toBase58(),
-        vault.toBase58(),
-        tokenProgram.toBase58(),
-      );
-
       return program.methods
         .make(seed, mintAAmount)
         .accountsPartial({
@@ -177,7 +169,7 @@ export const useEscrow = () => {
     try {
       const escrowAccount = await getEscrowInfo(escrow);
       const mintAInfo = await getMintInfo(new PublicKey(escrowAccount.mintA));
-      console.log(mintAInfo);
+
       const takerAmount = new BN(amount).mul(
         new BN(10).pow(new BN(mintAInfo.decimals)),
       );

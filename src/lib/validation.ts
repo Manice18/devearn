@@ -24,8 +24,14 @@ const createBountySchema = z.object({
   isLive: z.enum(["true", "false"]),
 });
 
+const bountySubmissionSchema = z.object({
+  submissionDetails: z.string().trim().min(10, "Cannot be empty"),
+});
+
+export type BountySubmissionFormType = z.infer<typeof bountySubmissionSchema>;
+
 export type CreateBountyFormType = z.infer<typeof createBountySchema>;
 
 export type UpdateProfileValues = z.infer<typeof updateProfileSchema>;
 
-export { updateProfileSchema, createBountySchema };
+export { updateProfileSchema, createBountySchema, bountySubmissionSchema };
