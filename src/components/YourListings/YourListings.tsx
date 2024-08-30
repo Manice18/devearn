@@ -37,7 +37,7 @@ const YourListings = () => {
   ) : (
     <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-6">
       <p className="mt-6 text-center">
-        There are no listed <br /> bounties yet.
+        You have not listed <br /> any bounties yet.
       </p>
       <p className="flex gap-2.5">
         Click below to list your own. <CornerRightDown />

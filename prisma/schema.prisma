@@ -26,6 +26,7 @@ model User {
   bounties           Bounty[]
   bountySubmissions  BountySubmission[]
   rewardContributors RewardContributors[]
+  devRanking         DevRanking[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -84,7 +85,7 @@ model Bounty {
   githubRepo    String
   githubIssue   String
   difficulty    Difficulty
-  rewardAmount  Int
+  rewardAmount  Float
   rewardToken   String
   isLive        Boolean            @default(false)
   completed     Boolean            @default(false)
@@ -122,13 +123,28 @@ model RewardContributors {
   gitHubRepo           String
   totalContributors    Int
   tokenMintAddress     String
-  totalAllocatedAmount Int
-  totalClaimedAmount   Int?
+  totalAllocatedAmount Float
+  totalClaimedAmount   Float?
   noOfTimesClaimed     Int?
   userId               String
   user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+
+  @@map("reward_contributors")
+}
+
+model DevRanking {
+  id               String @id @default(cuid())
+  userId           String
+  totalSubmissions Int
+  totalWins        Int?
+  totalEarnedInUSD Float?
+  user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("dev_ranking")
 }
 
 enum Difficulty {

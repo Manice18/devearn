@@ -55,7 +55,7 @@ const CreateBountyForm = () => {
 
   const [repos, setRepos] = useState<Repo[]>([]);
   const [issues, setIssues] = useState<Issue[]>([]);
-  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+  // const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -105,14 +105,12 @@ const CreateBountyForm = () => {
   const handleRepoChange = (repoFullName: string) => {
     form.setValue("githubRepo", repoFullName);
     form.setValue("githubIssue", ""); // Reset the issue when repo changes
-    setSelectedIssue(null);
     fetchIssues(repoFullName);
   };
 
   const handleIssueChange = (issueNumber: string) => {
     const issue = issues.find((i) => i.number.toString() === issueNumber);
     if (issue) {
-      setSelectedIssue(issue);
       form.setValue("githubIssue", `#${issue.number} ${issue.title}`);
     }
   };
@@ -133,6 +131,7 @@ const CreateBountyForm = () => {
   });
 
   async function onSubmit(values: CreateBountyFormType) {
+    console.log("values", values);
     if (!publicKey || !connected) {
       toast.error("Please connect your wallet first");
       return;

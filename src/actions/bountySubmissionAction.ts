@@ -28,6 +28,8 @@ export async function bountySubmissionAction({
       userId: userId,
     },
   });
+
+  return;
 }
 
 export async function getBountySubmissions(bountyId: string) {
