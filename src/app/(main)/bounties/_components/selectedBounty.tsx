@@ -87,6 +87,7 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
             <ListBountySubmission
               bountyId={bounty.id}
               bountyUserId={bounty.userId}
+              bountyAmount={bounty.rewardAmount}
             />
           </div>
         ) : (

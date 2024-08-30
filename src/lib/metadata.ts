@@ -44,6 +44,20 @@ export function constructMetaData({
       description,
       images: [image],
     },
+    icons: {
+      icon: [
+        {
+          media: "(prefers-color-scheme: light)",
+          url: "/assets/brand-icons/favicon.ico",
+          href: "/assets/brand-icons/favicon.ico",
+        },
+        {
+          media: "(prefers-color-scheme: dark)",
+          url: "/assets/brand-icons/favicon.ico",
+          href: "/assets/brand-icons/favicon.ico",
+        },
+      ],
+    },
     metadataBase: new URL("https://devearn.vercel.app/"),
     robots,
   };

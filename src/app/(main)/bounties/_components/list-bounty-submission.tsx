@@ -84,9 +84,16 @@ const ListBountySubmission = ({
   const handleAcceptSubmission = async (
     bountyId: string,
     submissionId: string,
+    winAmount: number,
+    submissionUserId: string,
   ) => {
     try {
-      await acceptBountySubmission(submissionId, bountyId);
+      await acceptBountySubmission(
+        submissionId,
+        bountyId,
+        winAmount,
+        submissionUserId,
+      );
       toast.success("Submission accepted");
       fetchBountySubmissions();
     } catch (e) {
@@ -162,7 +169,12 @@ const ListBountySubmission = ({
                 <Button
                   className="w-24"
                   onClick={() => {
-                    handleAcceptSubmission(bountyId, submission.id);
+                    handleAcceptSubmission(
+                      bountyId,
+                      submission.id,
+                      bountyAmount!,
+                      submission.userId,
+                    );
                   }}
                 >
                   Accept

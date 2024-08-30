@@ -70,6 +70,8 @@ export async function getBountySubmissions(bountyId: string) {
 export async function acceptBountySubmission(
   submissionId: string,
   bountyId: string,
+  winAmount: number,
+  submissionUserId: string,
 ) {
   const session = await auth();
   const userId = session?.user?.id;
@@ -92,6 +94,18 @@ export async function acceptBountySubmission(
     },
     data: {
       isAccepted: true,
+    },
+  });
+
+  await prisma.devRanking.update({
+    where: { userId: submissionUserId },
+    data: {
+      totalWins: {
+        increment: 1,
+      },
+      totalEarnedInUSD: {
+        increment: winAmount,
+      },
     },
   });
 

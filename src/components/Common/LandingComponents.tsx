@@ -11,7 +11,7 @@ export const LandingHeader = () => {
           <Image
             height={50}
             width={50}
-            src={"/assets/icons/logo.svg"}
+            src="/assets/brand-icons/logo.svg"
             alt="DevEarn Logo"
             className="size-10"
           />
