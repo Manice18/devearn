@@ -29,6 +29,23 @@ export async function bountySubmissionAction({
     },
   });
 
+  await prisma.devRanking.upsert({
+    where: {
+      userId: userId,
+    },
+    update: {
+      totalSubmissions: {
+        increment: 1,
+      },
+    },
+    create: {
+      userId: userId,
+      totalSubmissions: 1,
+      totalEarnedInUSD: 0,
+      totalWins: 0,
+    },
+  });
+
   return;
 }
 

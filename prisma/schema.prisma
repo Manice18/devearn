@@ -136,8 +136,8 @@ model RewardContributors {
 
 model DevRanking {
   id               String @id @default(cuid())
-  userId           String
-  totalSubmissions Int
+  userId           String @unique
+  totalSubmissions Int?
   totalWins        Int?
   totalEarnedInUSD Float?
   user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
