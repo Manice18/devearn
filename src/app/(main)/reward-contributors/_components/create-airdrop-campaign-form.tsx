@@ -80,7 +80,6 @@ const CreateAirdropCampaignForm = () => {
   });
 
   async function onSubmit(values: RewardContributorFormType) {
-    console.log(values);
     try {
       if (!connected || !publicKey) {
         return;

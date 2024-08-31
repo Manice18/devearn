@@ -36,13 +36,7 @@ export const POST = async (req: Request) => {
   try {
     const url = new URL(req.url);
 
-    /**
-     * we can type the `body.data` to what fields we expect from the GET response above
-     */
     const body: NextActionPostRequest = await req.json();
-
-    // body will contain the user's `account` and `memo` input from the user
-    console.log("body:", body);
 
     let account: PublicKey;
     try {
@@ -70,8 +64,6 @@ export const POST = async (req: Request) => {
 
     try {
       let status = await connection.getSignatureStatus(signature);
-
-      console.log("signature status:", status);
 
       if (!status) throw "Unknown signature status";
 
@@ -108,8 +100,6 @@ export const POST = async (req: Request) => {
       "confirmed",
     );
 
-    console.log("transaction: ", transaction);
-
     /**
      * returning a `CompletedAction` allows you to update the
      * blink metadata but not allow the user to perform any
@@ -131,7 +121,6 @@ export const POST = async (req: Request) => {
       headers,
     });
   } catch (err) {
-    console.log(err);
     let actionError: ActionError = { message: "An unknown error occurred" };
     if (typeof err == "string") actionError.message = err;
     return Response.json(actionError, {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { GithubIcon, CoinsIcon, ArrowRightIcon } from "lucide-react";
@@ -9,7 +10,6 @@ import {
   LandingFooter,
   LandingHeader,
 } from "@/components/Common/LandingComponents";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -168,7 +168,64 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="w-full bg-white py-12 md:py-24 lg:py-32">
+        <section
+          className="w-full bg-white py-12 md:py-24 lg:py-32"
+          id="features"
+        >
+          <div className="container mx-auto px-4 md:px-6">
+            <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter text-gray-900 sm:text-4xl">
+              Reward Contributors with Blink (Under Development)
+            </h2>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="border-gray-200 bg-white">
+                <CardHeader>
+                  <Badge className="mb-4 h-8 w-8 bg-gray-200 text-lg text-gray-700">
+                    1
+                  </Badge>
+                  <CardTitle className="text-gray-900">
+                    Select Repository
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">
+                    Choose a GitHub repository to reward contributors.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="border-gray-200 bg-white">
+                <CardHeader>
+                  <Badge className="mb-4 h-8 w-8 bg-gray-200 text-lg text-gray-700">
+                    2
+                  </Badge>
+                  <CardTitle className="text-gray-900">
+                    Deposit Airdrop Amount
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">
+                    Deposit the airdrop amount for the selected repository.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="border-gray-200 bg-white">
+                <CardHeader>
+                  <Badge className="mb-4 h-8 w-8 bg-gray-200 text-lg text-gray-700">
+                    3
+                  </Badge>
+                  <CardTitle className="text-gray-900">
+                    Share the Blink
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">
+                    Share the Blink on social media and with the community.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+        <section className="w-full bg-gray-100 py-12 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <h2 className="text-3xl font-bold tracking-tighter text-gray-900 sm:text-4xl">
@@ -184,15 +241,6 @@ export default function Home() {
                     Sign Up
                   </Button>
                 </Link>
-                <p className="text-xs text-gray-500">
-                  By signing up, you agree to our{" "}
-                  <Link
-                    className="underline underline-offset-2 hover:text-gray-900"
-                    href="#"
-                  >
-                    Terms & Conditions
-                  </Link>
-                </p>
               </div>
             </div>
           </div>

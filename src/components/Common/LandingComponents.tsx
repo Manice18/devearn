@@ -43,7 +43,7 @@ export const LandingHeader = () => {
 
 export const LandingFooter = () => {
   return (
-    <footer className="w-full border-t border-gray-200 bg-gray-100 py-8">
+    <footer className="w-full border-t border-gray-200 bg-white py-8">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center justify-between sm:flex-row">
           <p className="text-sm text-gray-600">

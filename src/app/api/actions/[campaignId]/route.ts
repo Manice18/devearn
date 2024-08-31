@@ -87,7 +87,6 @@ export const POST = async (
       params: ActionPostRequest<{ memo: string }>["data"];
     } = await req.json();
 
-    console.log(params.campaignId);
     const userName = body.data!.memo as string;
 
     const contributors = await prisma.contributors.findMany({
@@ -98,11 +97,8 @@ export const POST = async (
     });
 
     if (contributors.length === 0) {
-      throw 'Invalid "userName" provided';
+      throw 'Invalid "userName" provided/Not a contributor';
     }
-
-    console.log(contributors);
-    console.log("body:", body);
 
     let account: PublicKey;
     try {
