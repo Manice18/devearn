@@ -49,7 +49,7 @@ const links = [
     ),
   },
   {
-    label: "Reward Contributors",
+    label: "Reward Contributors (Blinks)",
     href: "/reward-contributors",
     icon: (
       <FileBadge className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />

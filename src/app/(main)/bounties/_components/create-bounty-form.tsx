@@ -149,6 +149,10 @@ const CreateBountyForm = () => {
           mintA: USDC_ADDRESS,
           deposit: values.rewardAmount,
         }).then(async (res) => {
+          if (!res) {
+            reject("Error creating escrow");
+            return;
+          }
           await createBountyAction(values, publicKey.toString(), res)
             .then(() => {
               resolve();

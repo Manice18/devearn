@@ -28,10 +28,27 @@ const bountySubmissionSchema = z.object({
   submissionDetails: z.string().trim().min(10, "Cannot be empty"),
 });
 
+const rewardContributorSchema = z.object({
+  airdropCampaignName: z.string().trim().min(1, "Cannot be empty"),
+  githubRepo: z.string().trim().min(1, "Cannot be empty"),
+  totalContributors: z.coerce.number().gte(1, "Value must be greater than 0"),
+  tokenMintAddress: z.string().trim().min(1, "Cannot be empty"),
+  totalAllocatedAmount: z.coerce
+    .number()
+    .gte(1, "Value must be greater than 0"),
+});
+
+export type RewardContributorFormType = z.infer<typeof rewardContributorSchema>;
+
 export type BountySubmissionFormType = z.infer<typeof bountySubmissionSchema>;
 
 export type CreateBountyFormType = z.infer<typeof createBountySchema>;
 
 export type UpdateProfileValues = z.infer<typeof updateProfileSchema>;
 
-export { updateProfileSchema, createBountySchema, bountySubmissionSchema };
+export {
+  updateProfileSchema,
+  createBountySchema,
+  bountySubmissionSchema,
+  rewardContributorSchema,
+};

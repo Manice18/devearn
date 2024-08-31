@@ -117,21 +117,36 @@ model BountySubmission {
 }
 
 model RewardContributors {
-  id                   String @id @default(cuid())
-  airdropCampaignName  String
-  blinkLink            String
-  gitHubRepo           String
-  totalContributors    Int
-  tokenMintAddress     String
-  totalAllocatedAmount Float
-  totalClaimedAmount   Float?
-  noOfTimesClaimed     Int?
-  userId               String
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                    String         @id @default(cuid())
+  airdropCampaignName   String
+  blinkLink             String?
+  gitHubRepo            String
+  totalContributors     Int
+  tokenMintAddress      String
+  totalAllocatedAmount  Float
+  totalClaimedAmount    Float?
+  escrowAddress         String?
+  eachContributorAmount Float
+  noOfTimesClaimed      Int?
+  userId                String
+  user                  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Contributors          Contributors[]
 
   createdAt DateTime @default(now())
 
   @@map("reward_contributors")
+}
+
+model Contributors {
+  id                   String             @id @default(cuid())
+  userName             String
+  totalContributions   Int
+  rewardContributorsId String
+  rewardContributors   RewardContributors @relation(fields: [rewardContributorsId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("contributors")
 }
 
 model DevRanking {

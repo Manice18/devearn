@@ -8,6 +8,7 @@ import {
   claimRewardAction,
 } from "./bountySubmissionAction";
 import { getAllDevRankings } from "./devRankingAction";
+import { createAirdropCampaignAction } from "./rewardContributorAction";
 
 export {
   updateProfile,
@@ -18,4 +19,5 @@ export {
   acceptBountySubmission,
   claimRewardAction,
   getAllDevRankings,
+  createAirdropCampaignAction,
 };

@@ -15,27 +15,6 @@ const BountiesPage = () => {
   const [bounties, setBounties] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  /* This useEffect is for testing*/
-  //   useEffect(() => {
-  //     setBounties([
-  //       {
-  //         id: "1",
-  //         title: "Bounty 1",
-  //         description: "Description 1",
-  //         reward: "Reward 1",
-  //         deadline: "Deadline 1",
-  //       },
-  //       {
-  //         id: "2",
-  //         title: "Bounty 2",
-  //         description: "Description 2",
-  //         reward: "Reward 2",
-  //         deadline: "Deadline 2",
-  //       },
-  //     ]);
-  //     setIsLoading(false);
-  //   }, []);
-
   useEffect(() => {
     const fetchBounties = async () => {
       try {
