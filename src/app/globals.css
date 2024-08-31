@@ -72,3 +72,30 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.wallet-adapter-button.wallet-adapter-button-trigger {
+  @apply bg-full relative z-0 flex h-min w-full cursor-pointer items-center justify-center rounded-lg bg-[#F7F7F7] px-6 py-[9px] text-sm font-normal text-black outline outline-[0.7px] backdrop-blur-sm backdrop-filter transition-all duration-500 hover:text-white hover:before:opacity-100 md:text-base;
+}
+.wallet-adapter-button.wallet-adapter-button-trigger::before {
+  @apply absolute left-0 top-0 z-[-100] block h-full w-full rounded-[inherit] bg-opacity-10 bg-gradient-to-r from-[#000] to-gray-900 bg-clip-padding text-white opacity-0 backdrop-blur-sm backdrop-filter transition-opacity duration-500 ease-in-out content-[""];
+}
+.wallet-adapter-button.wallet-adapter-button-trigger
+  > .wallet-adapter-button-start-icon {
+  @apply !mr-2;
+}
+
+.wallet-adapter-dropdown-list {
+  @apply absolute z-[100] !gap-0 border-[2px] border-[##505050] !bg-[##505050] !p-0;
+}
+.wallet-adapter-dropdown-list-active {
+  @apply translate-x-[40%] translate-y-[5%] gap-0 p-0 md:translate-x-0;
+}
+.wallet-adapter-dropdown-list::before {
+  @apply absolute -top-[5px] left-[50%] translate-x-[-50%] border-x-8 border-b-4 border-x-transparent border-b-[##505050] content-[""];
+}
+.wallet-adapter-dropdown-list > li {
+  @apply px-10 py-5;
+}
+.wallet-adapter-dropdown-list > li:hover {
+  @apply !bg-black;
+}
