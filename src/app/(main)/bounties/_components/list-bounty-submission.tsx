@@ -45,12 +45,14 @@ const ListBountySubmission = ({
   setTrackUserSubmission,
   escrowAddress,
   bountyAmount,
+  bountyCompleted,
 }: {
   bountyId: string;
   bountyUserId?: string;
   setTrackUserSubmission?: any;
   escrowAddress?: string;
   bountyAmount?: number;
+  bountyCompleted?: boolean;
 }) => {
   const { publicKey, connected } = useWallet();
   const session = useSession();
@@ -158,8 +160,14 @@ const ListBountySubmission = ({
           </span>
         </div>
       )}
-      {bountySubmissions?.map((submission) => (
-        <div key={submission.id} className="border-y p-4">
+      {bountySubmissions?.map((submission, index) => (
+        <div
+          key={submission.id}
+          className={cn(
+            "border-t p-4 last:border-b",
+            index === 0 && "border-t-0",
+          )}
+        >
           <div className="flex items-center justify-between">
             <div className="flex space-x-2">
               <Link href={`https://github.com/${submission.user.name}`}>
@@ -175,22 +183,21 @@ const ListBountySubmission = ({
                 {submission.user.name}
               </p>
             </div>
-            {session.data?.user?.id === bountyUserId &&
-              !submission.isAccepted && (
-                <Button
-                  className="w-24"
-                  onClick={() => {
-                    handleAcceptSubmission(
-                      bountyId,
-                      submission.id,
-                      bountyAmount!,
-                      submission.userId,
-                    );
-                  }}
-                >
-                  Accept
-                </Button>
-              )}
+            {session.data?.user?.id === bountyUserId && !bountyCompleted && (
+              <Button
+                className="w-24"
+                onClick={() => {
+                  handleAcceptSubmission(
+                    bountyId,
+                    submission.id,
+                    bountyAmount!,
+                    submission.userId,
+                  );
+                }}
+              >
+                Accept
+              </Button>
+            )}
             {submission.isAccepted && (
               <div className="flex space-x-2">
                 <div className="flex items-center space-x-1 rounded-full bg-green-100 px-3 py-2 text-sm ring-[1.5px] ring-green-200">

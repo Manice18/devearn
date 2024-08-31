@@ -75,7 +75,14 @@ export default function SettingsPage({ user }: SettingsPageProps) {
                     className="dark:hover:bg-hoverdark transition-all duration-500 dark:bg-black"
                   />
                 </FormControl>
-                <FormDescription>Your public username</FormDescription>
+                <FormDescription className="flex flex-col">
+                  <span>Your public username.</span>{" "}
+                  <span>
+                    <span className="font-medium">Note:</span> It is preferred
+                    not to change it since this is from github acting as a
+                    unique name.
+                  </span>
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

@@ -95,6 +95,7 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
               bountyId={bounty.id}
               bountyUserId={bounty.userId}
               bountyAmount={bounty.rewardAmount}
+              bountyCompleted={bounty.completed}
             />
           </div>
         ) : (
