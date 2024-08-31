@@ -1,4 +1,8 @@
+import { useMemo } from "react";
+import dynamic from "next/dynamic";
+
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -9,13 +13,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import {
   BountySubmissionFormType,
   bountySubmissionSchema,
 } from "@/lib/validation";
-import { toast } from "sonner";
+import { formats } from "@/lib/constants";
 import { bountySubmissionAction } from "@/actions";
+
+import "react-quill/dist/quill.snow.css";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const BountySubmissionForm = ({
   bountyId,
@@ -43,6 +50,30 @@ const BountySubmissionForm = ({
       toast.error("Error submitting bounty");
     }
   };
+
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [
+            { header: "1" },
+            { header: "2" },
+            { header: [3, 4, 5, 6] },
+            { font: [] },
+          ],
+          [{ size: [] }],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
+          ["link"],
+          ["clean"],
+        ],
+      },
+    }),
+    [],
+  );
+
   return (
     <Form {...form}>
       <form
@@ -55,10 +86,14 @@ const BountySubmissionForm = ({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea
+                <ReactQuill
+                  theme="snow"
+                  modules={modules}
+                  formats={formats}
+                  value={field.value}
                   placeholder="Link to your submission, or a detailed description of your work"
-                  {...field}
-                  className="dark:hover:bg-hoverdark w-full text-black transition-all duration-500 dark:bg-black dark:text-white"
+                  onChange={field.onChange}
+                  className="dark:bg-black dark:text-white"
                 />
               </FormControl>
               <FormMessage />

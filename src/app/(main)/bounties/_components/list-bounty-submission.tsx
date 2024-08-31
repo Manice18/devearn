@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
@@ -139,6 +140,14 @@ const ListBountySubmission = ({
 
   return (
     <div className="space-y-6">
+      <h1
+        className={cn(
+          "text-3xl font-bold",
+          session.data?.user?.id === bountyUserId && "hidden",
+        )}
+      >
+        Submissions
+      </h1>
       {bountySubmissions?.length === 0 && (
         <div>
           No submissions yet.{" "}
@@ -150,16 +159,18 @@ const ListBountySubmission = ({
         </div>
       )}
       {bountySubmissions?.map((submission) => (
-        <div key={submission.id}>
+        <div key={submission.id} className="border-y p-4">
           <div className="flex items-center justify-between">
             <div className="flex space-x-2">
-              <Image
-                src={submission.user.image!}
-                alt="user"
-                width={50}
-                height={50}
-                className="h-8 w-8 rounded-full"
-              />
+              <Link href={`https://github.com/${submission.user.name}`}>
+                <Image
+                  src={submission.user.image!}
+                  alt="user"
+                  width={50}
+                  height={50}
+                  className="h-8 w-8 rounded-full"
+                />
+              </Link>
               <p className="text-black dark:text-white">
                 {submission.user.name}
               </p>
@@ -202,15 +213,14 @@ const ListBountySubmission = ({
                   )}
               </div>
             )}
-            {/* {submission.userId === session.data?.user?.id &&
-                submission.isAccepted && (
-                )} */}
           </div>
-          <p className="text-black dark:text-white">
-            {submission.submissionDetails}
-          </p>
-          <p>
-            Submitted At:{" "}
+
+          <div
+            className="my-2 px-10 text-black dark:text-white"
+            dangerouslySetInnerHTML={{ __html: submission.submissionDetails }}
+          />
+          <p className="text-end">
+            <span className="font-medium">Submitted At:</span>{" "}
             <span>{format(new Date(submission.createdAt), "dd MMM yyyy")}</span>
           </p>
         </div>

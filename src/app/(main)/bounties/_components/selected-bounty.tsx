@@ -75,8 +75,13 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
             </span>
           </div>
         </div>
-        <div className="flex flex-col">
-          <p className="text-black dark:text-white">{bounty.description}</p>
+        <div className="flex flex-col space-y-2">
+          {/* <p className="text-black dark:text-white">{bounty.description}</p> */}
+          <h2 className="text-xl font-bold">Description</h2>
+          <div
+            className="text-black dark:text-white"
+            dangerouslySetInnerHTML={{ __html: bounty.description }}
+          />
           <p className="ml-auto">
             <span className="font-medium">Created At:</span>{" "}
             <span>{format(new Date(bounty.createdAt), "dd MMM yyyy")}</span>
@@ -94,7 +99,6 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
           </div>
         ) : (
           <div>
-            {/* TODO:Enable functionality for making submissions visible to everyone */}
             <ListBountySubmission
               bountyId={bounty.id}
               bountyUserId={bounty.userId}

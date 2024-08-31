@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -30,10 +31,12 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { formats } from "@/lib/constants";
 import { createBountyAction } from "@/actions";
 import { useEscrow } from "@/hooks/useEscrow";
+
+import "react-quill/dist/quill.snow.css";
 
 interface Repo {
   id: number;
@@ -45,6 +48,8 @@ interface Issue {
   number: number;
   title: string;
 }
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const CreateBountyForm = () => {
   const { publicKey, connected } = useWallet();
@@ -140,19 +145,19 @@ const CreateBountyForm = () => {
       promise = new Promise<void>(async (resolve, reject) => {
         const USDC_ADDRESS = "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
 
-        const escrowAddress = await makeEscrow({
+        await makeEscrow({
           mintA: USDC_ADDRESS,
           deposit: values.rewardAmount,
+        }).then(async (res) => {
+          await createBountyAction(values, publicKey.toString(), res)
+            .then(() => {
+              resolve();
+              router.push("/your-listings");
+            })
+            .catch((error) => {
+              reject(error);
+            });
         });
-
-        await createBountyAction(values, publicKey.toString(), escrowAddress)
-          .then(() => {
-            resolve();
-            router.push("/your-listings");
-          })
-          .catch((error) => {
-            reject(error);
-          });
       });
 
       toast.promise(promise, {
@@ -164,6 +169,29 @@ const CreateBountyForm = () => {
       console.error("Error creating profile", error);
     }
   }
+
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [
+            { header: "1" },
+            { header: "2" },
+            { header: [3, 4, 5, 6] },
+            { font: [] },
+          ],
+          [{ size: [] }],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
+          ["link"],
+          ["clean"],
+        ],
+      },
+    }),
+    [],
+  );
 
   return (
     <Form {...form}>
@@ -216,10 +244,14 @@ const CreateBountyForm = () => {
             <FormItem>
               <FormLabel className="dark:text-white">Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Description "
-                  {...field}
-                  className="dark:hover:bg-hoverdark w-full text-black transition-all duration-500 dark:bg-black dark:text-white"
+                <ReactQuill
+                  theme="snow"
+                  modules={modules}
+                  formats={formats}
+                  value={field.value}
+                  placeholder="Description"
+                  onChange={field.onChange}
+                  className="dark:bg-black dark:text-white"
                 />
               </FormControl>
               <FormDescription>
@@ -263,7 +295,6 @@ const CreateBountyForm = () => {
                         </div>
                       </SelectItem>
                     )}
-                    {/* TODO:Add github linking here*/}
                   </SelectContent>
                 </Select>
                 <FormDescription>

@@ -90,8 +90,8 @@ model Bounty {
   isLive        Boolean            @default(false)
   completed     Boolean            @default(false)
   createdBy     String?
-  pubKey        String?
-  escrowAddress String?
+  pubKey        String
+  escrowAddress String
   userId        String
   user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   submissions   BountySubmission[]
