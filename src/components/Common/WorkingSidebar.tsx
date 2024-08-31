@@ -19,47 +19,50 @@ import { motion } from "framer-motion";
 import { Sidebar, SidebarBody, SidebarLink } from "./Sidebar";
 import { cn } from "@/lib/utils";
 
+const links = [
+  {
+    label: "Bounties",
+    href: "/bounties",
+    icon: (
+      <BadgeDollarSign className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
+    ),
+  },
+  {
+    label: "Leaderboard",
+    href: "/leaderboard",
+    icon: (
+      <Crown className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
+    ),
+  },
+  {
+    label: "Settings",
+    href: "/settings",
+    icon: (
+      <Settings className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
+    ),
+  },
+  {
+    label: "Your Listings",
+    href: "/your-listings",
+    icon: (
+      <ClipboardList className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
+    ),
+  },
+  {
+    label: "Reward Contributors",
+    href: "/reward-contributors",
+    icon: (
+      <FileBadge className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
+    ),
+  },
+];
+
 export function WorkingSidebar({ children }: { children?: React.ReactNode }) {
   const session = useSession();
   const user = session?.data?.user;
-  const links = [
-    {
-      label: "Bounties",
-      href: "/bounties",
-      icon: (
-        <BadgeDollarSign className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      label: "Leaderboard",
-      href: "/leaderboard",
-      icon: (
-        <Crown className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-      icon: (
-        <Settings className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      label: "Your Listings",
-      href: "/your-listings",
-      icon: (
-        <ClipboardList className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      label: "Reward Contributors",
-      href: "/reward-contributors",
-      icon: (
-        <FileBadge className="size-5 flex-shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-  ];
+
   const [open, setOpen] = useState(false);
+
   return (
     <div
       className={cn(
@@ -123,11 +126,18 @@ export const Logo = () => {
       href="#"
       className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
     >
-      <div className="h-5 w-6 flex-shrink-0 rounded-bl-sm rounded-br-lg rounded-tl-lg rounded-tr-sm bg-black dark:bg-white" />
+      {/* <div className="h-5 w-6 flex-shrink-0 rounded-bl-sm rounded-br-lg rounded-tl-lg rounded-tr-sm bg-black dark:bg-white" /> */}
+      <Image
+        height={50}
+        width={50}
+        src="/assets/brand-icons/logo.svg"
+        alt="DevEarn Logo"
+        className="size-10"
+      />
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="whitespace-pre font-medium text-black dark:text-white"
+        className="whitespace-pre text-lg font-bold text-gray-900 dark:text-white md:text-3xl"
       >
         DevEarn
       </motion.span>
@@ -140,7 +150,13 @@ export const LogoIcon = () => {
       href="#"
       className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
     >
-      <div className="h-5 w-6 flex-shrink-0 rounded-bl-sm rounded-br-lg rounded-tl-lg rounded-tr-sm bg-black dark:bg-white" />
+      <Image
+        height={50}
+        width={50}
+        src="/assets/brand-icons/logo.svg"
+        alt="DevEarn Logo"
+        className="size-10"
+      />
     </Link>
   );
 };

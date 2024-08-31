@@ -37,9 +37,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { yourListingAction } from "@/actions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type BountyData = {
   id: string;
@@ -230,26 +230,6 @@ export default function ListingTable() {
           );
         },
       },
-      // {
-      //   header: "Delete",
-      //   id: "delete",
-
-      //   cell: (tableProps) => (
-      //     <Button
-      //       className="size-8 gap-2.5 rounded-md p-0 transition duration-500 hover:bg-red-900 dark:bg-red-600 dark:hover:bg-red-900"
-      //       onClick={async () => {
-      //         const data = await deleteCouponAction(
-      //           tableProps.row.original.title,
-      //         );
-      //         toast.success("Coupon deleted successfully");
-      //         setData(data as any);
-      //       }}
-      //       variant="destructive"
-      //     >
-      //       <Trash2 size={18} />
-      //     </Button>
-      //   ),
-      // },
     ],
     [],
   );

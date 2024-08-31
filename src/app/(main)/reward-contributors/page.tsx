@@ -1,3 +1,10 @@
+import { constructMetaData } from "@/lib/metadata";
+
+export const metadata = constructMetaData({
+  title: "Reward Contributors | DevEarn",
+  description: "This is the Reward Contributors Page for DevEarn",
+});
+
 const Page = () => {
   return (
     <section>

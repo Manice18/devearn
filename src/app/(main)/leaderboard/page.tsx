@@ -1,3 +1,4 @@
+import LeaderboardTable from "@/components/Leaderboard/Leaderboard";
 import { constructMetaData } from "@/lib/metadata";
 
 export const metadata = constructMetaData({
@@ -6,7 +7,11 @@ export const metadata = constructMetaData({
 });
 
 const Leaderboard = () => {
-  return <div>hi hi lwkjelw jewl</div>;
+  return (
+    <div>
+      <LeaderboardTable />
+    </div>
+  );
 };
 
 export default Leaderboard;

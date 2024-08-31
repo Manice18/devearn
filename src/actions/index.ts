@@ -7,6 +7,7 @@ import {
   acceptBountySubmission,
   claimRewardAction,
 } from "./bountySubmissionAction";
+import { getAllDevRankings } from "./devRankingAction";
 
 export {
   updateProfile,
@@ -16,4 +17,5 @@ export {
   getBountySubmissions,
   acceptBountySubmission,
   claimRewardAction,
+  getAllDevRankings,
 };

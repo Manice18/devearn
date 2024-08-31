@@ -1,4 +1,10 @@
-import CreateBountyForm from "../_components/createBountyForm";
+import { constructMetaData } from "@/lib/metadata";
+import CreateBountyForm from "../_components/create-bounty-form";
+
+export const metadata = constructMetaData({
+  title: "Create | DevEarn",
+  description: "This is the Create Bounties Page for DevEarn",
+});
 
 const Page = () => {
   return (

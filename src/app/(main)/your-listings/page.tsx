@@ -1,4 +1,10 @@
 import YourListings from "@/components/YourListings/YourListings";
+import { constructMetaData } from "@/lib/metadata";
+
+export const metadata = constructMetaData({
+  title: "Your Listings | DevEarn",
+  description: "This is the Your Listings Page for DevEarn",
+});
 
 const Listings = () => {
   return (

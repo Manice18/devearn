@@ -1,12 +1,14 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import BountySubmissionForm from "./bountySubmissionForm";
-import ListBountySubmission from "./list-bounty-submission";
+
 import { format } from "date-fns";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import BountySubmissionForm from "./bounty-submission-form";
+import ListBountySubmission from "./list-bounty-submission";
 
 const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
   const [bounty, setBounty] = useState<any>(null);

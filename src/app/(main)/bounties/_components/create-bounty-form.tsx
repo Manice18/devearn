@@ -131,7 +131,6 @@ const CreateBountyForm = () => {
   });
 
   async function onSubmit(values: CreateBountyFormType) {
-    console.log("values", values);
     if (!publicKey || !connected) {
       toast.error("Please connect your wallet first");
       return;

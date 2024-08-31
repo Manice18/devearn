@@ -1,15 +1,11 @@
-import { Check } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
