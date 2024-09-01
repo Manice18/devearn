@@ -142,11 +142,45 @@ model Contributors {
   userName             String
   totalContributions   Int
   rewardContributorsId String
+  claimAmount          Float?
   rewardContributors   RewardContributors @relation(fields: [rewardContributorsId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
   @@map("contributors")
+}
+
+// Create Airdrop Campaign with Blink
+model AirdropCampaignBlink {
+  id                    String  @id @default(cuid())
+  airdropCampaignName   String
+  tokenMintAddress      String
+  blinkLink             String?
+  escrowAddress         String?
+  creatorPubKey         String
+  gitHubRepo            String
+  totalContributors     Int
+  totalAllocatedAmount  Float
+  eachContributorAmount Float
+
+  airDropContributors AirdropContributors[]
+
+  createdAt DateTime @default(now())
+
+  @@map("airdrop_campaign")
+}
+
+model AirdropContributors {
+  id                     String               @id @default(cuid())
+  userName               String
+  totalContributions     Int
+  claimAmount            Float
+  airdropCampaignBlinkId String
+  airdropCampaign        AirdropCampaignBlink @relation(fields: [airdropCampaignBlinkId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("airdrop_contributors")
 }
 
 model DevRanking {

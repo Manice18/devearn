@@ -45,6 +45,7 @@ export async function createAirdropCampaignAction(
         rewardContributorsId: res.id,
         totalContributions: contributor.contributions,
         userName: contributor.login,
+        claimAmount: eachContributorAmount,
       },
     });
   });
