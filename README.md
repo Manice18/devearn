@@ -14,9 +14,11 @@
 - **Reward Contributors (Upcoming Feature):** Airdrop rewards to repository contributors using Blinks, which can be claimed as part of an airdrop campaign (Explained better in later section).
 
 ## Bounty Creation and Claim Process
-![create bounty](https://github.com/user-attachments/assets/a085b88c-101e-46e4-87fa-06266484b0d0)
+![create-bounty](https://github.com/user-attachments/assets/baddf46d-1a88-4288-9d01-2e04a8f1ee2c)
 
 ## Airdropping Contributors with Blinks Process
+![airdrop-creation](https://github.com/user-attachments/assets/355420cc-352e-4e88-844a-421fe135ef4f)
+![contributor](https://github.com/user-attachments/assets/03fabe08-5d81-45a6-a1c2-5fbcfaf36b6d)
 
 ## Navigating The Routes
 
@@ -47,8 +49,7 @@
 
 ## Tech-stack Used
 
-<img height="25" src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="nextjs" title="NextJS" />
-<img height="25" src="https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF" alt="solana" title="Solana" />
+<img height="25" src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="nextjs" title="NextJS" /> <img height="25" src="https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF" alt="solana" title="Solana" />
 <img height="25" src="https://img.shields.io/badge/web3%20js-F16822?style=for-the-badge&logo=web3.js&logoColor=white" alt="web3js" title="Web3.JS" />
 <img height="25" src="https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcnUI" title="ShadcnUI" />
 <img height="25" src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" title="Rust" />
