@@ -13,9 +13,10 @@
 - **Verify & Claim:** The original poster of the bounty verifies the PR and accepts the submission, allowing the developer to claim the tokens allocated to the bounty.
 - **Reward Contributors (Upcoming Feature):** Airdrop rewards to repository contributors using Blinks, which can be claimed as part of an airdrop campaign (Explained better in later section).
 
-## Working of Bounty Creation and Claiming
+## Bounty Creation and Claim Process
+![create bounty](https://github.com/user-attachments/assets/a085b88c-101e-46e4-87fa-06266484b0d0)
 
-## Working of Airdroping Contributors with Blinks
+## Airdropping Contributors with Blinks Process
 
 ## Navigating The Routes
 
