@@ -87,8 +87,6 @@ export const POST = async (req: NextRequest) => {
       data: { username: string };
     };
 
-    console.log("body:", body);
-
     const { searchParams } = new URL(req.url);
 
     const campaignId = searchParams.get("campaignId") as string;
@@ -149,7 +147,6 @@ export const POST = async (req: NextRequest) => {
     }
 
     if (check === "start") {
-      console.log("statusUrl:", statusUrl);
       const res = await fetch(statusUrl);
       const data = await res.json();
 
@@ -164,14 +161,10 @@ export const POST = async (req: NextRequest) => {
         }
       }
     }
-    console.log(claim);
+
     if (check === "verified" && claim === "true") {
       check = "done";
     }
-
-    console.log("check:", check);
-    console.log("statusUrlStart:", statusUrlStart);
-    console.log("imageUrl:", imageUrl);
 
     const payload: ActionPostResponse = await createPostResponse({
       fields: {

@@ -16,6 +16,12 @@ import {
   Transaction,
   TransactionInstruction,
 } from "@solana/web3.js";
+import {
+  getAssociatedTokenAddressSync,
+  getMint,
+  TOKEN_2022_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
 import { BN, Program, web3 } from "@coral-xyz/anchor";
 
 import prisma from "@/lib/prisma";
@@ -26,14 +32,10 @@ import {
 } from "@/lib/blinkHelper";
 import idl from "@/lib/solana/idl.json";
 import { EscrowNew } from "@/types/escrow_new";
-import {
-  getAssociatedTokenAddressSync,
-  getMint,
-  TOKEN_2022_PROGRAM_ID,
-  TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
 
-const connection = new web3.Connection(web3.clusterApiUrl("devnet"));
+const connection = new web3.Connection(
+  process.env.NEXT_PUBLIC_SOLANA_RPC! || web3.clusterApiUrl("devnet"),
+);
 
 const program = new Program<EscrowNew>(idl as EscrowNew, {
   connection,
@@ -57,7 +59,6 @@ const headers = createActionHeaders();
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const campaignId = searchParams.get("campaignId") as string;
-  console.log("campaignId:", campaignId);
 
   try {
     const data = await prisma.airdropCampaignBlink.findUnique({
@@ -119,8 +120,6 @@ export const POST = async (req: NextRequest) => {
       signature: string;
       data: { username: string };
     };
-
-    console.log("body:", body);
 
     const { searchParams } = new URL(req.url);
 
@@ -184,7 +183,6 @@ export const POST = async (req: NextRequest) => {
     }
 
     if (check === "start") {
-      console.log("statusUrl:", statusUrl);
       const res = await fetch(statusUrl);
       const data = await res.json();
 
@@ -219,8 +217,7 @@ export const POST = async (req: NextRequest) => {
       const tokenProgram = (await isToken2022(escrowAccount.mintA))
         ? TOKEN_2022_PROGRAM_ID
         : TOKEN_PROGRAM_ID;
-      console.log("escrowAccount.mintA:", escrowAccount.mintA);
-      console.log("amount", contributors[0].claimAmount);
+
       const mintAInfo = await getMintInfo(new PublicKey(escrowAccount.mintA));
       const takerAmount = new BN(contributors[0].claimAmount).mul(
         new BN(10).pow(new BN(mintAInfo.decimals)),

@@ -17,9 +17,6 @@ export async function generateQR() {
   const { requestUrl, statusUrl } =
     await reclaimClient.createVerificationRequest();
 
-  console.log("Request URL", requestUrl);
-  console.log("Status URL", statusUrl);
-
   return {
     requestUrl: requestUrl,
     statusUrl: statusUrl,
