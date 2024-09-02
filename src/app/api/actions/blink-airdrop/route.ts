@@ -46,8 +46,8 @@ const headers = createActionHeaders();
 export const GET = async (req: NextRequest) => {
   try {
     const payload: ActionGetResponse = {
-      title: "Create airdrop for your contributions",
-      icon: new URL("/blink-preview.png", new URL(req.url).origin).toString(),
+      title: "Create airdrop for your contributors",
+      icon: new URL("/blink-preview.webp", new URL(req.url).origin).toString(),
       description: `Reward your hard working contributors for their valuable contributions at any GitHub repository of your choice.`,
       label: "Get Airdrop",
       links: {

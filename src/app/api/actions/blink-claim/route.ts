@@ -73,8 +73,8 @@ export const GET = async (req: NextRequest) => {
       });
     }
     const payload: ActionGetResponse = {
-      title: data?.airdropCampaignName || "Simple Action Chaining Example",
-      icon: new URL("/blink-preview.png", new URL(req.url).origin).toString(),
+      title: data?.airdropCampaignName || "Airdrop your Contributors",
+      icon: new URL("/blink-preview.webp", new URL(req.url).origin).toString(),
       description: `Get airdrop for your contributions at ${data.gitHubRepo}`,
       label: "Get Airdrop",
       links: {
@@ -281,7 +281,7 @@ export const POST = async (req: NextRequest) => {
                 ? getNextActionBlink(
                     "2",
                     campaignId,
-                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}blink-preview.png`,
+                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}blink-preview.webp`,
                     null,
                     escrowId,
                     getUsername,
