@@ -16,9 +16,40 @@ import {
   Transaction,
   TransactionInstruction,
 } from "@solana/web3.js";
+import { BN, Program, web3 } from "@coral-xyz/anchor";
 
 import prisma from "@/lib/prisma";
-import { completedAction, generateQR, getNextAction } from "@/lib/blinkHelper";
+import {
+  completedAction,
+  generateQR,
+  getNextActionBlink,
+} from "@/lib/blinkHelper";
+import idl from "@/lib/solana/idl.json";
+import { EscrowNew } from "@/types/escrow_new";
+import {
+  getAssociatedTokenAddressSync,
+  getMint,
+  TOKEN_2022_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+
+const connection = new web3.Connection(web3.clusterApiUrl("devnet"));
+
+const program = new Program<EscrowNew>(idl as EscrowNew, {
+  connection,
+});
+
+const isToken2022 = async (mint: PublicKey) => {
+  const mintInfo = await connection.getAccountInfo(mint);
+  return mintInfo?.owner.equals(TOKEN_2022_PROGRAM_ID);
+};
+const getMintInfo = async (mint: PublicKey) => {
+  const tokenProgram = (await isToken2022(mint))
+    ? TOKEN_2022_PROGRAM_ID
+    : TOKEN_PROGRAM_ID;
+
+  return getMint(connection, mint, undefined, tokenProgram);
+};
 
 // create the standard headers for this route (including CORS)
 const headers = createActionHeaders();
@@ -26,28 +57,29 @@ const headers = createActionHeaders();
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const campaignId = searchParams.get("campaignId") as string;
-  if (!campaignId) {
-    return new Response("Invalid Campaign Id", {
-      status: 400,
-      headers: headers,
-    });
-  }
+  console.log("campaignId:", campaignId);
+
   try {
-    const data = await prisma.rewardContributors.findUnique({
+    const data = await prisma.airdropCampaignBlink.findUnique({
       where: {
         id: campaignId,
       },
     });
-
+    if (!data) {
+      return new Response("Invalid Campaign Id", {
+        status: 400,
+        headers: headers,
+      });
+    }
     const payload: ActionGetResponse = {
       title: data?.airdropCampaignName || "Simple Action Chaining Example",
       icon: new URL("/blink-preview.png", new URL(req.url).origin).toString(),
-      description: `Get airdrop for your contributions at ${data?.gitHubRepo}`,
+      description: `Get airdrop for your contributions at ${data.gitHubRepo}`,
       label: "Get Airdrop",
       links: {
         actions: [
           {
-            href: `/api/actions/airdrop?campaignId=${campaignId}`,
+            href: `/api/actions/blink-claim?campaignId=${campaignId}&escrowId=${data.escrowAddress}`,
             label: "Verify your github username",
             parameters: [
               {
@@ -93,6 +125,7 @@ export const POST = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
 
     const campaignId = searchParams.get("campaignId") as string;
+    const escrowId = searchParams.get("escrowId") as string;
     const getUsername = searchParams.get("username") as string;
     const statusUrl = searchParams.get("statusUrl") as string;
     const claim = searchParams.get("claim") as string;
@@ -120,6 +153,7 @@ export const POST = async (req: NextRequest) => {
     } catch (err) {
       throw 'Invalid "account" provided';
     }
+
     const transaction = new Transaction().add(
       ComputeBudgetProgram.setComputeUnitPrice({
         microLamports: 1000,
@@ -165,14 +199,71 @@ export const POST = async (req: NextRequest) => {
         }
       }
     }
-    console.log(claim);
+
     if (check === "verified" && claim === "true") {
       check = "done";
     }
 
-    console.log("check:", check);
-    console.log("statusUrlStart:", statusUrlStart);
-    console.log("imageUrl:", imageUrl);
+    if (check === "verified" && claim === "false") {
+      const contributors = await prisma.airdropContributors.findMany({
+        where: {
+          airdropCampaignBlinkId: campaignId,
+          userName: getUsername,
+        },
+      });
+
+      const authority = new web3.PublicKey(body.account);
+      const escrow = new web3.PublicKey(escrowId);
+
+      const escrowAccount = await program.account.escrow.fetch(escrow);
+      const tokenProgram = (await isToken2022(escrowAccount.mintA))
+        ? TOKEN_2022_PROGRAM_ID
+        : TOKEN_PROGRAM_ID;
+      console.log("escrowAccount.mintA:", escrowAccount.mintA);
+      console.log("amount", contributors[0].claimAmount);
+      const mintAInfo = await getMintInfo(new PublicKey(escrowAccount.mintA));
+      const takerAmount = new BN(contributors[0].claimAmount).mul(
+        new BN(10).pow(new BN(mintAInfo.decimals)),
+      );
+      const vault = getAssociatedTokenAddressSync(
+        new PublicKey(escrowAccount.mintA),
+        escrow,
+        true,
+        tokenProgram,
+      );
+      const ix = await program.methods
+        .take(takerAmount)
+        .accountsPartial({
+          maker: escrowAccount.maker,
+          taker: new PublicKey(body.account),
+          mintA: new PublicKey(escrowAccount.mintA),
+          escrow,
+          vault,
+        })
+        .instruction();
+      const blockhash = await connection
+        .getLatestBlockhash({ commitment: "max" })
+        .then((res) => res.blockhash);
+      const messageV0 = new web3.TransactionMessage({
+        payerKey: authority,
+        recentBlockhash: blockhash,
+        instructions: [ix],
+      }).compileToV0Message();
+      const transaction = new web3.VersionedTransaction(messageV0);
+      const payload: ActionPostResponse = await createPostResponse({
+        fields: {
+          transaction,
+          message: "Verify Github Username with Reclaim Protocol",
+          links: {
+            next: completedAction("4"),
+          },
+        },
+      });
+
+      return Response.json(payload, {
+        headers,
+      });
+    }
 
     const payload: ActionPostResponse = await createPostResponse({
       fields: {
@@ -181,24 +272,24 @@ export const POST = async (req: NextRequest) => {
         links: {
           next:
             check === null
-              ? getNextAction(
+              ? getNextActionBlink(
                   "1",
                   campaignId,
                   imageUrl,
                   statusUrlStart,
+                  escrowId,
                   body.data.username,
                 )
               : check === "verified"
-                ? getNextAction(
+                ? getNextActionBlink(
                     "2",
                     campaignId,
                     "http://localhost:3000/blink-preview.png",
                     null,
+                    escrowId,
                     getUsername,
                   )
-                : check === "done"
-                  ? completedAction("3")
-                  : completedAction("4"),
+                : completedAction("4"),
         },
       },
     });

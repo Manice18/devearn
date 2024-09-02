@@ -45,7 +45,35 @@ export const getNextAction = (
         actions: [
           {
             label: `${stage === "1" ? "Submit Proof" : stage === "2" ? "Claim Airdrop" : stage === "3" ? "Airdrop Claimed" : ""}`,
-            href: `/api/actions/airdrop?campaignId=${campaignId}&check=${Number(stage) === 1 ? `start&statusUrl=${statusUrl}&username=${username}` : Number(stage) === 2 ? `verified&username=${username}&claim=true` : Number(stage) === 3 ? `verified&username=${username}&claim=true` : ""}`,
+            href: `/api/actions/airdrop?campaignId=${campaignId}&check=${Number(stage) === 1 ? `start&statusUrl=${statusUrl}&username=${username}` : Number(stage) === 2 ? `verified&username=${username}&claim=false` : Number(stage) === 3 ? `verified&username=${username}&claim=true` : ""}`,
+          },
+        ],
+      },
+    },
+  };
+};
+
+export const getNextActionBlink = (
+  stage: string,
+  campaignId: string,
+  url: string,
+  statusUrl: string | null,
+  escrowId: string,
+  username?: string,
+): NextActionLink => {
+  return {
+    type: "inline",
+    action: {
+      description: `${stage === "1" ? "Scan the QR to proof your username with zk-proof technology with the help of Reclaim Protocol app and after submitting your proof in the app, click on Submit Proof." : stage === "2" ? "Your GitHub username was verified successfully and hence you are eligible to claim the airdrop. Click on claim and get airdrop for your contributions. Thanks for your contributions and keep contributing!" : stage === "3" ? "Your airdrop is claimed." : ""}`,
+      icon: `${url}`,
+      label: `${stage === "1" ? "Submit Proof" : stage === "2" ? "Claim Airdrop" : stage === "3" ? "Airdrop Claimed" : ""}`,
+      title: `${stage === "1" ? "Proof your GitHub username and claim Airdrop" : stage === "2" ? "Claim Airdrop" : stage === "3" ? "Airdrop Claimed" : ""}`,
+      type: "action",
+      links: {
+        actions: [
+          {
+            label: `${stage === "1" ? "Submit Proof" : stage === "2" ? "Claim Airdrop" : stage === "3" ? "Airdrop Claimed" : ""}`,
+            href: `/api/actions/blink-claim?campaignId=${campaignId}&escrowId=${escrowId}&username=${username}&check=${Number(stage) === 1 ? `start&statusUrl=${statusUrl}` : Number(stage) === 2 ? `verified&claim=false` : ""}`,
           },
         ],
       },
