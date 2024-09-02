@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import AirdropCampaignStats from "@/components/RewardContributors/AirdropCampaignStats";
 import { constructMetaData } from "@/lib/metadata";
 
 export const metadata = constructMetaData({
@@ -20,6 +21,7 @@ const Page = () => {
             <Button>Create Airdrop Campaign</Button>
           </Link>
         </div>
+        <AirdropCampaignStats />
       </div>
     </section>
   );

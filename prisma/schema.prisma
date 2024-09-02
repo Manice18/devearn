@@ -143,6 +143,7 @@ model Contributors {
   totalContributions   Int
   rewardContributorsId String
   claimAmount          Float?
+  haveClaimed          Boolean?           @default(false)
   rewardContributors   RewardContributors @relation(fields: [rewardContributorsId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -176,6 +177,7 @@ model AirdropContributors {
   totalContributions     Int
   claimAmount            Float
   airdropCampaignBlinkId String
+  haveClaimed            Boolean?             @default(false)
   airdropCampaign        AirdropCampaignBlink @relation(fields: [airdropCampaignBlinkId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())

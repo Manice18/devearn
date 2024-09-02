@@ -54,3 +54,17 @@ export async function createAirdropCampaignAction(
 
   return;
 }
+
+export async function fetchAllCampaignsAction(userId: string) {
+  const session = await auth();
+
+  if (!session?.user) throw new Error("Unauthorized");
+
+  const campaignData = await prisma.rewardContributors.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+
+  return campaignData;
+}
