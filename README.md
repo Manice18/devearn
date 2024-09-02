@@ -11,7 +11,7 @@
 - **Create Bounties:** Sign up with GitHub and create a bounty to reward someone for solving issues in your selected repository.
 - **Submit PRs:** After making a pull request (PR), post a link to your PR on the listed bounty you’ve worked on.
 - **Verify & Claim:** The original poster of the bounty verifies the PR and accepts the submission, allowing the developer to claim the tokens allocated to the bounty.
-- **Reward Contributors (Upcoming Feature):** Airdrop rewards to repository contributors using Blinks, which can be claimed as part of an airdrop campaign (Explained better in later section).
+- **Reward Contributors:** Airdrop rewards to repository contributors using Blinks, which can be claimed as part of an airdrop campaign (Explained better in later section).
 
 ## Bounty Creation and Claim Process
 
