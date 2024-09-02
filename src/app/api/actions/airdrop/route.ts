@@ -191,13 +191,13 @@ export const POST = async (req: NextRequest) => {
                 ? getNextAction(
                     "2",
                     campaignId,
-                    "http://localhost:3000/blink-preview.png",
+                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}blink-preview.png`,
                     null,
                     getUsername,
                   )
                 : check === "done"
-                  ? completedAction("3")
-                  : completedAction("4"),
+                  ? completedAction()
+                  : completedAction(),
         },
       },
     });

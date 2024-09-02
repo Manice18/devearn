@@ -31,6 +31,7 @@ export const getNextAction = (
   campaignId: string,
   url: string,
   statusUrl: string | null,
+  escrowId: string,
   username?: string,
 ): NextActionLink => {
   return {
@@ -45,7 +46,7 @@ export const getNextAction = (
         actions: [
           {
             label: `${stage === "1" ? "Submit Proof" : stage === "2" ? "Claim Airdrop" : stage === "3" ? "Airdrop Claimed" : ""}`,
-            href: `/api/actions/airdrop?campaignId=${campaignId}&check=${Number(stage) === 1 ? `start&statusUrl=${statusUrl}&username=${username}` : Number(stage) === 2 ? `verified&username=${username}&claim=false` : Number(stage) === 3 ? `verified&username=${username}&claim=true` : ""}`,
+            href: `/api/actions/airdrop?campaignId=${campaignId}&escrowId=${escrowId}&username=${username}&check=${Number(stage) === 1 ? `start&statusUrl=${statusUrl}` : Number(stage) === 2 ? `verified&claim=false` : ""}`,
           },
         ],
       },
@@ -81,17 +82,15 @@ export const getNextActionBlink = (
   };
 };
 
-export const completedAction = (stage: string): NextActionLink => {
+export const completedAction = (): NextActionLink => {
   return {
     type: "inline",
     action: {
       description: `Airdrop claimed successfully. Thanks for your contributions and keep contributing!`,
-      icon: `http://localhost:3000/airdrop.webp`,
+      icon: `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}airdrop.webp`,
       label: `Claim Successfull`,
       title: `Airdrop Claimed Successfully`,
       type: "completed",
     },
   };
 };
-
-// export const

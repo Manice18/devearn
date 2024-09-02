@@ -255,7 +255,7 @@ export const POST = async (req: NextRequest) => {
           transaction,
           message: "Verify Github Username with Reclaim Protocol",
           links: {
-            next: completedAction("4"),
+            next: completedAction(),
           },
         },
       });
@@ -284,12 +284,12 @@ export const POST = async (req: NextRequest) => {
                 ? getNextActionBlink(
                     "2",
                     campaignId,
-                    "http://localhost:3000/blink-preview.png",
+                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}blink-preview.png`,
                     null,
                     escrowId,
                     getUsername,
                   )
-                : completedAction("4"),
+                : completedAction(),
         },
       },
     });
