@@ -150,7 +150,7 @@ const CreateBountyForm = () => {
           deposit: values.rewardAmount,
         }).then(async (res) => {
           if (!res) {
-            reject("Error creating escrow");
+            reject("Error depositing funds.");
             return;
           }
           await createBountyAction(values, publicKey.toString(), res)

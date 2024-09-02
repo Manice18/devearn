@@ -38,7 +38,6 @@ interface Contributors {
 const CreateAirdropCampaignForm = () => {
   const { publicKey, connected } = useWallet();
   const router = useRouter();
-  const session = useSession();
 
   const { makeEscrow } = useEscrow();
 
@@ -86,21 +85,30 @@ const CreateAirdropCampaignForm = () => {
       }
       let promise: any;
       promise = new Promise<void>(async (resolve, reject) => {
-        const blinkLink =
-          "https://dial.to/?action=solana-action:https://devearn.vercel.app/api/actions/${value.publicKey.toBase58()}";
-        await createAirdropCampaignAction(
-          values,
-          blinkLink,
-          repos,
-          values.totalAllocatedAmount / values.totalContributors,
-        )
-          .then(() => {
-            resolve();
-          })
-          .catch((error) => {
-            reject(error);
-          });
+        await makeEscrow({
+          deposit: values.totalAllocatedAmount,
+          mintA: values.tokenMintAddress,
+        }).then(async (res) => {
+          if (!res) {
+            reject("Error depositing funds.");
+            return;
+          }
+          await createAirdropCampaignAction(
+            values,
+            repos,
+            values.totalAllocatedAmount / values.totalContributors,
+            res,
+          )
+            .then(() => {
+              resolve();
+              router.push("/reward-contributors");
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        });
       });
+
       toast.promise(promise, {
         loading: "Creating airdrop campaign...",
         success: "Airdrop campaign created successfully.",
@@ -200,7 +208,7 @@ const CreateAirdropCampaignForm = () => {
             name="tokenMintAddress"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel className="dark:text-white">Reward Amount</FormLabel>
+                <FormLabel className="dark:text-white">Token Address</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Eg. 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
@@ -208,7 +216,10 @@ const CreateAirdropCampaignForm = () => {
                     className="w-full rounded-md text-black transition-all"
                   />
                 </FormControl>
-                <FormDescription>Reward Amount for the Bounty</FormDescription>
+                <FormDescription>
+                  Token Address of the Reward (Make sure your wallet has this
+                  token)
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

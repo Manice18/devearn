@@ -99,7 +99,7 @@ export default function AirdropCampaignTable({
             </Button>
           </div>
         ),
-        cell: ({ row }) => <div>{row.getValue("airdropCampaignName")}</div>,
+        cell: ({ row }) => <div>{row.original.airdropCampaignName}</div>,
       },
       {
         id: "Blink",
@@ -109,11 +109,11 @@ export default function AirdropCampaignTable({
           return (
             <div className="flex items-center space-x-1">
               <span>
-                {(row.getValue("blinkLink") as string).substring(0, 10) + "..."}
+                {(row.original.blinkLink as string).substring(0, 10) + "..."}
               </span>
               <Button
                 onClick={() => {
-                  onCopy(row.getValue("blinkLink") as string);
+                  onCopy(row.original.blinkLink as string);
                 }}
                 disabled={copied}
                 size="sm"
@@ -155,14 +155,14 @@ export default function AirdropCampaignTable({
         id: "Total Contributors",
         accessorKey: "totalContributors",
         header: "Total Contributors",
-        cell: ({ row }) => <div>{row.getValue("totalContributors")}</div>,
+        cell: ({ row }) => <div>{row.original.totalContributors}</div>,
       },
       {
         id: "Total Allocated Amount",
         accessorKey: "totalAllocatedAmount",
         header: "Total Allocated",
         cell: ({ row }) => (
-          <div>{Number(row.getValue("totalAllocatedAmount")).toFixed(2)}</div>
+          <div>{Number(row.original.totalAllocatedAmount).toFixed(2)}</div>
         ),
       },
       {
@@ -170,7 +170,7 @@ export default function AirdropCampaignTable({
         accessorKey: "eachContributorAmount",
         header: "Each Contributor Amount",
         cell: ({ row }) => (
-          <div>{Number(row.getValue("eachContributorAmount")).toFixed(2)}</div>
+          <div>{Number(row.original.eachContributorAmount).toFixed(2)}</div>
         ),
       },
       {
@@ -180,14 +180,9 @@ export default function AirdropCampaignTable({
         cell: ({ row }) => (
           <div className="flex items-center space-x-1">
             <span>
-              {shortenWalletAddress(
-                row.getValue("tokenMintAddress") as string,
-                4,
-              )}
+              {shortenWalletAddress(row.original.tokenMintAddress as string, 4)}
             </span>
-            <SolanaExplorer
-              address={row.getValue("tokenMintAddress") as string}
-            >
+            <SolanaExplorer address={row.original.tokenMintAddress as string}>
               <Button className="rounded-full py-1" size="sm">
                 <SquareArrowOutUpRight className="size-3" />
               </Button>
@@ -202,9 +197,9 @@ export default function AirdropCampaignTable({
         cell: ({ row }) => (
           <div className="flex items-center space-x-1">
             <span>
-              {shortenWalletAddress(row.getValue("escrowAddress") as string, 4)}
+              {shortenWalletAddress(row.original.escrowAddress as string, 4)}
             </span>
-            <SolanaExplorer address={row.getValue("escrowAddress") as string}>
+            <SolanaExplorer address={row.original.escrowAddress as string}>
               <Button className="rounded-full py-1" size="sm">
                 <SquareArrowOutUpRight className="size-3" />
               </Button>

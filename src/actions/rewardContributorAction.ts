@@ -15,9 +15,9 @@ type Contributors = {
 
 export async function createAirdropCampaignAction(
   values: RewardContributorFormType,
-  blinkLink: string,
   Contributors: Contributors[],
   eachContributorAmount: number,
+  escrowAddress: string,
 ) {
   const session = await auth();
   const userId = session?.user?.id;
@@ -30,12 +30,21 @@ export async function createAirdropCampaignAction(
     data: {
       userId: userId,
       airdropCampaignName: data.airdropCampaignName,
-      blinkLink: blinkLink,
       gitHubRepo: data.githubRepo,
       totalContributors: data.totalContributors,
       tokenMintAddress: data.tokenMintAddress,
       totalAllocatedAmount: data.totalAllocatedAmount,
       eachContributorAmount: eachContributorAmount,
+      escrowAddress: escrowAddress,
+    },
+  });
+
+  await prisma.rewardContributors.update({
+    where: {
+      id: res.id,
+    },
+    data: {
+      blinkLink: `https://dial.to/developer?url=https://devearn.vercel.app/api/actions/airdrop?campaignId=${res.id}&cluster=devnet`,
     },
   });
 
