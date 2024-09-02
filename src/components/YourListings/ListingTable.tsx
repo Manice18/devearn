@@ -105,6 +105,7 @@ export default function ListingTable() {
         enableHiding: false,
       },
       {
+        id: "Title",
         accessorKey: "title",
         header: ({ column }) => {
           return (
@@ -124,22 +125,24 @@ export default function ListingTable() {
         },
         cell: ({ row }) => (
           <div className="capitalize">
-            {(row.getValue("title") as string).length > 8
-              ? (row.getValue("title") as string).substring(0, 8) + "..."
-              : (row.getValue("title") as string)}
+            {(row.original.title as string).length > 8
+              ? (row.original.title as string).substring(0, 8) + "..."
+              : (row.original.title as string)}
           </div>
         ),
       },
       {
+        id: "Is Live",
         accessorKey: "isLive",
         header: "Is Live",
         cell: ({ row }) => {
-          return <div>{row.getValue("isLive") ? "Yes" : "No"}</div>;
+          return <div>{row.original.isLive ? "Yes" : "No"}</div>;
         },
       },
       {
+        id: "View Submissions",
+        accessorKey: "viewSubmissions",
         header: "View Submissions",
-        id: "edit",
         cell: (tableProps) => (
           <Button
             className="size-8 gap-2.5 rounded-md p-0 transition duration-500 hover:bg-gray-200 dark:bg-accent dark:hover:bg-accent"
@@ -152,14 +155,14 @@ export default function ListingTable() {
           </Button>
         ),
       },
-
       {
+        id: "Reward",
         accessorKey: "rewardAmount",
         header: "Reward",
         cell: ({ row }) => {
           return (
             <div className="flex items-center space-x-1 text-black dark:text-white">
-              <span>{row.getValue("rewardAmount")}</span>
+              <span>{row.original.rewardAmount}</span>
               <Avatar className="size-5">
                 <AvatarImage
                   src={
@@ -177,6 +180,7 @@ export default function ListingTable() {
         },
       },
       {
+        id: "Status",
         accessorKey: "completed",
         header: "Status",
         cell: ({ row }) => {
@@ -184,12 +188,12 @@ export default function ListingTable() {
             <div
               className={cn(
                 "text-titlebgdark w-[80px] rounded-full px-2 py-1 text-center font-medium dark:text-black",
-                row.getValue("completed") === true
+                row.original.completed === true
                   ? "bg-orange-100"
                   : "bg-green-200",
               )}
             >
-              {row.getValue("completed") ? "Completed" : "In Progress"}
+              {row.original.completed ? "Completed" : "In Progress"}
             </div>
           );
         },

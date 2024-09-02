@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import BountySubmissionForm from "./bounty-submission-form";
 import ListBountySubmission from "./list-bounty-submission";
+import SelectedBountySkeleton from "./selected-bounty-loading";
 
 const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
   const [bounty, setBounty] = useState<any>(null);
@@ -38,7 +39,7 @@ const SelectedBounty = ({ bountyId }: { bountyId: string }) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <SelectedBountySkeleton />;
   }
 
   return (

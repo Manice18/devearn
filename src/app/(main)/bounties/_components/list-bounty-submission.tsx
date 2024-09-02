@@ -17,6 +17,7 @@ import {
   getBountySubmissions,
 } from "@/actions";
 import { useEscrow } from "@/hooks/useEscrow";
+import BountySubmissionSkeleton from "./bounty-submission-skeleton";
 
 type User = {
   id: string;
@@ -137,7 +138,13 @@ const ListBountySubmission = ({
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col space-y-10">
+        {[1, 2, 3, 4].map((index) => (
+          <BountySubmissionSkeleton key={index} />
+        ))}
+      </div>
+    );
   }
 
   return (

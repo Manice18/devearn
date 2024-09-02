@@ -9,6 +9,7 @@ import { CornerRightDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fetchAllCampaignsAction } from "@/actions";
 import AirdropCampaignTable from "./AirdropCampaignTable";
+import BountiesSkeleton from "../Bounties/BountiesSkeleton";
 
 type AirdropCampaign = {
   id: string;
@@ -36,7 +37,6 @@ const AidropCampaignStats = () => {
     setIsLoading(true);
     const fetchAirdrops = async () => {
       const response = await fetchAllCampaignsAction(session?.data?.user.id);
-      console.log(response);
       setAirdrops(response);
     };
 
@@ -45,11 +45,10 @@ const AidropCampaignStats = () => {
   }, []);
 
   return isLoading ? (
-    <div>Loading...</div>
+    <BountiesSkeleton />
   ) : airdrops.length > 0 ? (
     <div>
       <AirdropCampaignTable airdrop={airdrops} />
-      {/* <ListingTable /> */}
     </div>
   ) : (
     <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-6">

@@ -9,6 +9,7 @@ import { CornerRightDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { yourListingAction } from "@/actions";
 import ListingTable from "./ListingTable";
+import BountiesSkeleton from "../Bounties/BountiesSkeleton";
 
 const YourListings = () => {
   const session = useSession();
@@ -29,7 +30,9 @@ const YourListings = () => {
   }, []);
 
   return isLoading ? (
-    <div>Loading...</div>
+    <div>
+      <BountiesSkeleton />
+    </div>
   ) : bounties.length > 0 ? (
     <div>
       <ListingTable />

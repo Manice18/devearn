@@ -8,6 +8,7 @@ import { CornerRightDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BountyCard from "./BountyCard";
+import BountiesSkeleton from "./BountiesSkeleton";
 
 const BountiesPage = () => {
   const router = useRouter();
@@ -48,7 +49,7 @@ const BountiesPage = () => {
           ) : null}
         </div>
         {isLoading ? (
-          <div>Loading...</div>
+          <BountiesSkeleton />
         ) : bounties.length > 0 ? (
           <Tabs defaultValue="all" className="w-full space-y-6">
             <TabsList>
@@ -61,42 +62,50 @@ const BountiesPage = () => {
               value="all"
               className="flex w-full flex-col items-center space-y-2"
             >
-              {bounties
-                .sort((a, b) => {
-                  if (a.isLive === b.isLive) {
-                    return a.completed === b.completed
-                      ? 0
-                      : a.completed
-                        ? 1
-                        : -1;
-                  }
-                  return a.isLive ? -1 : 1;
-                })
-                .map((bounty) => (
-                  <BountyCard key={bounty.id} {...bounty} />
-                ))}
+              {bounties.length > 0 ? (
+                bounties
+                  .sort((a, b) => {
+                    if (a.isLive === b.isLive) {
+                      return a.completed === b.completed
+                        ? 0
+                        : a.completed
+                          ? 1
+                          : -1;
+                    }
+                    return a.isLive ? -1 : 1;
+                  })
+                  .map((bounty) => <BountyCard key={bounty.id} {...bounty} />)
+              ) : (
+                <p>No bounties available.</p>
+              )}
             </TabsContent>
 
             <TabsContent
               value="live"
               className="flex w-full flex-col items-center space-y-2"
             >
-              {bounties
-                .filter((bounty) => bounty.isLive && !bounty.completed)
-                .map((bounty) => (
-                  <BountyCard key={bounty.id} {...bounty} />
-                ))}
+              {bounties.filter((bounty) => bounty.isLive && !bounty.completed)
+                .length > 0 ? (
+                bounties
+                  .filter((bounty) => bounty.isLive && !bounty.completed)
+                  .map((bounty) => <BountyCard key={bounty.id} {...bounty} />)
+              ) : (
+                <p>No live bounties available.</p>
+              )}
             </TabsContent>
 
             <TabsContent
               value="completed"
               className="flex w-full flex-col items-center space-y-2"
             >
-              {bounties
-                .filter((bounty) => !bounty.isLive && bounty.completed)
-                .map((bounty) => (
-                  <BountyCard key={bounty.id} {...bounty} />
-                ))}
+              {bounties.filter((bounty) => !bounty.isLive && bounty.completed)
+                .length > 0 ? (
+                bounties
+                  .filter((bounty) => !bounty.isLive && bounty.completed)
+                  .map((bounty) => <BountyCard key={bounty.id} {...bounty} />)
+              ) : (
+                <p>No bounties have been completed</p>
+              )}
             </TabsContent>
           </Tabs>
         ) : (

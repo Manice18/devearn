@@ -174,7 +174,7 @@ export default function Home() {
         >
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="mb-12 text-center text-3xl font-bold tracking-tighter text-gray-900 sm:text-4xl">
-              Reward Contributors with Blink (Under Development)
+              Reward Contributors with Blink
             </h2>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               <Card className="border-gray-200 bg-white">

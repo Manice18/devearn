@@ -70,6 +70,7 @@ export default function DevRankingTable() {
   const columns: ColumnDef<LeaderboardData>[] = useMemo(
     () => [
       {
+        id: "rank",
         accessorKey: "rank",
         header: ({ column }) => {
           return (
@@ -87,9 +88,10 @@ export default function DevRankingTable() {
             </div>
           );
         },
-        cell: ({ row }) => <div>{row.getValue("rank")}</div>,
+        cell: ({ row }) => <div>{row.original.rank}</div>,
       },
       {
+        id: "username",
         accessorKey: "username",
         header: ({ column }) => {
           return (
@@ -107,26 +109,27 @@ export default function DevRankingTable() {
             </div>
           );
         },
-        cell: ({ row }) => <div>{row.getValue("username")}</div>,
+        cell: ({ row }) => <div>{row.original.username}</div>,
       },
       {
+        id: "Total Submissions",
         accessorKey: "totalSubmissions",
         header: "Total Submissions",
-        cell: ({ row }) => <div>{row.getValue("totalSubmissions")}</div>,
+        cell: ({ row }) => <div>{row.original.totalSubmissions}</div>,
       },
       {
+        id: "Total Wins",
         accessorKey: "totalWins",
         header: "Total Wins",
-        cell: ({ row }) => <div>{row.getValue("totalWins")}</div>,
+        cell: ({ row }) => <div>{row.original.totalWins}</div>,
       },
       {
+        id: "Total Earned (in USDC)",
         accessorKey: "totalEarnedInUSD",
-        header: "Total Earned (USD)",
+        header: "Total Earned (in USDC)",
         cell: ({ row }) => (
           <div className="flex space-x-2">
-            <span>
-              {(row.getValue("totalEarnedInUSD") as number).toFixed(2)}
-            </span>
+            <span>{(row.original.totalEarnedInUSD as number).toFixed(2)}</span>
             <Avatar className="size-5">
               <AvatarImage src="https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694" />
               <AvatarFallback>USDC</AvatarFallback>
