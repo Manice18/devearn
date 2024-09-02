@@ -14,9 +14,11 @@
 - **Reward Contributors (Upcoming Feature):** Airdrop rewards to repository contributors using Blinks, which can be claimed as part of an airdrop campaign (Explained better in later section).
 
 ## Bounty Creation and Claim Process
+
 ![create-bounty](https://github.com/user-attachments/assets/baddf46d-1a88-4288-9d01-2e04a8f1ee2c)
 
 ## Airdropping Contributors with Blinks Process
+
 ![airdrop-creation](https://github.com/user-attachments/assets/355420cc-352e-4e88-844a-421fe135ef4f)
 ![contributor](https://github.com/user-attachments/assets/03fabe08-5d81-45a6-a1c2-5fbcfaf36b6d)
 
@@ -42,6 +44,7 @@
   - **RPC**: From any Solana RPC provider (e.g., Helius).
   - **AUTH_SECRET**: Run `npx auth secret` to generate it.
   - **AUTH_GITHUB_ID** and **AUTH_GITHUB_SECRET**: Register a new OAuth application on GitHub under Developer Settings to get these.apps and Register a new application to get them.
+  - **RECLAIM_APP_SECRET** and **RECLAIM_APP_ID**: Go to [Reclaim Protocol](https://dev.reclaimprotocol.org/) and create a new application and select Github Username as the provider.
 - Install dependencies with `npm i`.
 - Start the application with `npm run dev`.
 
