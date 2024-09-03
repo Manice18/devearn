@@ -22,6 +22,12 @@
 ![airdrop-creation](https://github.com/user-attachments/assets/355420cc-352e-4e88-844a-421fe135ef4f)
 ![contributor](https://github.com/user-attachments/assets/03fabe08-5d81-45a6-a1c2-5fbcfaf36b6d)
 
+### Blink Routes:
+
+- **/api/actions/blink-airdrop** : Helps you create airdrop campaigns for your contributors via blinks. Try it out here: [Dial.to](https://dial.to/developer?url=https%3A%2F%2Fdevearn.vercel.app%2Fapi%2Factions%2Fblink-airdrop&cluster=devnet)
+- **/api/actions/blink-claim?campaignId=_(id here received from blink-airdrop)_** : Helps the devs(repository contributors) to claim the airdrops created from _blink-airdrop_.
+- **/api/actions/airdrop?campaignId=_(id created from dashboard)_** : Helps the devs(repository contributors) to claim the airdrop for the campaigns created from **_/reward-contributors_** dashboard.
+
 ## Navigating The Routes
 
 1. **/signin**: Sign in or sign up with GitHub.
