@@ -42,6 +42,12 @@
 8. **/reward-contributors**: View details of your created airdrop campaigns.
 9. **/settings**: Change your username.
 
+## Working Videos
+### Creating/claiming with Blinks:
+[![Creating/claiming with Blinks](https://github.com/user-attachments/assets/11ff273d-e00d-40ee-9fe6-09bbce781c64)](https://drive.google.com/file/d/1KWwARqPnaIOHj6esg3qUkLvgouSD48vA/view?usp=sharing)
+### Claiming with Blinks after creating airdrop campaign from Reward Contributors Page:
+[![Claiming with Blinks](https://github.com/user-attachments/assets/f325eb33-d1e8-45b5-bd6b-752ac0fd546b)](https://drive.google.com/file/d/1yK2cnkOHXBnSl_NyH_keOrUIYJu5BuzO/view?usp=sharing)
+
 ## How to run the project
 
 - Run the command `cp .env.examples .env` to set up your environment variables.
