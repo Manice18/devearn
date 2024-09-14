@@ -282,7 +282,7 @@ export const POST = async (req: NextRequest) => {
                 ? getNextActionBlink(
                     "2",
                     campaignId,
-                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : origin === "https://www.devearn.xyz" ? "https://www.devearn.xyz/" : "https://devearn.vercel.app/"}blink-preview.webp`,
+                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : origin === "https://www.devearn.xyz" || "https://devearn.xyz" ? "https://devearn.xyz/" : "https://devearn.vercel.app/"}blink-preview.webp`,
                     null,
                     escrowId,
                     getUsername,
