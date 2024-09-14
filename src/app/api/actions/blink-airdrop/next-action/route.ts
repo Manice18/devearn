@@ -102,7 +102,7 @@ export const POST = async (req: NextRequest) => {
           },
         });
 
-        blinkLink = `https://dial.to/?action=solana-action:${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}api/actions/blink-claim?campaignId=${createAirdropCampaign.id}`;
+        blinkLink = `https://dial.to/?action=solana-action:${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : url.origin === "https://www.devearn.xyz" ? "https://www.devearn.xyz/" : "https://devearn.vercel.app/"}api/actions/blink-claim?campaignId=${createAirdropCampaign.id}`;
 
         const contributorPromises = contributors.map((contributor) => {
           return prisma.airdropContributors.create({
