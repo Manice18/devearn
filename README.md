@@ -13,6 +13,13 @@
 - **Verify & Claim:** The original poster of the bounty verifies the PR and accepts the submission, allowing the developer to claim the tokens allocated to the bounty.
 - **Reward Contributors:** Airdrop rewards to repository contributors using Blinks, which can be claimed as part of an airdrop campaign (Explained better in later section).
 
+## Airdrop yourself some USDC to try out
+
+Go to Circle USDC faucet and select solana Devnet:
+![Circle USDC faucet](https://faucet.circle.com/)
+
+Mint address of USDC: `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU`
+
 ## Bounty Creation and Claim Process
 
 ![create-bounty](https://github.com/user-attachments/assets/baddf46d-1a88-4288-9d01-2e04a8f1ee2c)
