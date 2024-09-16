@@ -16,7 +16,7 @@
 ## Airdrop yourself some USDC to try out
 
 Go to Circle USDC faucet and select solana Devnet:
-![Circle USDC faucet](https://faucet.circle.com/)
+[Circle USDC faucet](https://faucet.circle.com/)
 
 Mint address of USDC: `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU`
 
