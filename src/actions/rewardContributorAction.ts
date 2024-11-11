@@ -44,7 +44,7 @@ export async function createAirdropCampaignAction(
       id: res.id,
     },
     data: {
-      blinkLink: `https://dial.to/developer?url=https://devearn.vercel.app/api/actions/airdrop?campaignId=${res.id}&cluster=devnet`,
+      blinkLink: `https://dial.to/developer?url=https://devearn.xyz/api/actions/airdrop?campaignId=${res.id}&cluster=devnet`,
     },
   });
 

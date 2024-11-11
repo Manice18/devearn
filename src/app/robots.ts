@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://devearn.vercel.app/sitemap.xml",
+    sitemap: "https://devearn.xyz/sitemap.xml",
   };
 }
 
@@ -16,4 +16,4 @@ export default function robots(): MetadataRoute.Robots {
 
 // User-Agent: *
 // Allow: /
-// Sitemap: https://devearn.vercel.app/sitemap.xml
+// Sitemap: https://devearn.xyz/sitemap.xml

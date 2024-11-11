@@ -4,7 +4,7 @@ export function constructMetaData({
   title = "DevEarn",
   description = "Secure your contributions, unlock the vault of developer rewards.!",
   image = "/thumbnail.png", // put a thumbnail.png in public folder, resolution 1200x630
-  authors = { name: "devearn team", url: "https://devearn.vercel.app/" },
+  authors = { name: "devearn team", url: "https://devearn.xyz/" },
   creator = "devearn team",
   generator = "Next.js",
   publisher = "devearn team",
@@ -58,7 +58,7 @@ export function constructMetaData({
         },
       ],
     },
-    metadataBase: new URL("https://devearn.vercel.app/"),
+    metadataBase: new URL("https://devearn.xyz/"),
     robots,
   };
 }

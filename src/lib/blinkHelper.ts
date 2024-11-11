@@ -84,7 +84,7 @@ export const completedAction = (): NextActionLink => {
     type: "inline",
     action: {
       description: `Airdrop claimed successfully. Thanks for your contributions and keep contributing!`,
-      icon: `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}airdrop.webp`,
+      icon: `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.xyz/"}airdrop.webp`,
       label: `Claim Successfull`,
       title: `Airdrop Claimed Successfully`,
       type: "completed",

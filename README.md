@@ -31,7 +31,7 @@ Mint address of USDC: `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU`
 
 ### Blink Routes:
 
-- **/api/actions/blink-airdrop** : Helps you create airdrop campaigns for your contributors via blinks. Try it out here: [Dial.to](https://dial.to/developer?url=https%3A%2F%2Fdevearn.vercel.app%2Fapi%2Factions%2Fblink-airdrop&cluster=devnet)
+- **/api/actions/blink-airdrop** : Helps you create airdrop campaigns for your contributors via blinks. Try it out here: [Dial.to](https://dial.to/developer?url=https%3A%2F%2Fdevearn.xyz%2Fapi%2Factions%2Fblink-airdrop&cluster=devnet)
 - **/api/actions/blink-claim?campaignId=_(id here received from blink-airdrop)_** : Helps the devs(repository contributors) to claim the airdrops created from _blink-airdrop_.
 - **/api/actions/airdrop?campaignId=_(id created from dashboard)_** : Helps the devs(repository contributors) to claim the airdrop for the campaigns created from **_/reward-contributors_** dashboard.
 
@@ -50,9 +50,13 @@ Mint address of USDC: `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU`
 9. **/settings**: Change your username.
 
 ## Working Videos
+
 ### Creating/claiming with Blinks:
+
 [![Creating/claiming with Blinks](https://github.com/user-attachments/assets/11ff273d-e00d-40ee-9fe6-09bbce781c64)](https://drive.google.com/file/d/1KWwARqPnaIOHj6esg3qUkLvgouSD48vA/view?usp=sharing)
+
 ### Claiming with Blinks after creating airdrop campaign from Reward Contributors Page:
+
 [![Claiming with Blinks](https://github.com/user-attachments/assets/f325eb33-d1e8-45b5-bd6b-752ac0fd546b)](https://drive.google.com/file/d/1yK2cnkOHXBnSl_NyH_keOrUIYJu5BuzO/view?usp=sharing)
 
 ## How to run the project

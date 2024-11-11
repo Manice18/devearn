@@ -279,7 +279,7 @@ export const POST = async (req: NextRequest) => {
                 ? getNextAction(
                     "2",
                     campaignId,
-                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.vercel.app/"}blink-preview.webp`,
+                    `${process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? "http://localhost:3000/" : "https://devearn.xyz/"}blink-preview.webp`,
                     null,
                     escrowId,
                     getUsername,
